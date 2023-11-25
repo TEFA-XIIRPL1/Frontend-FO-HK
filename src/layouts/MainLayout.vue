@@ -20,7 +20,45 @@ export default defineComponent({
 
         <q-toolbar-title> Quasar App </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- Icon BTNs -->
+        <div>
+          <q-btn round padding="8px" flat>
+            <q-icon
+              :size="$q.screen.lt.md ? '28px' : '32px'"
+              color="white"
+              name="o_notifications"
+            />
+          </q-btn>
+          <q-btn round padding="8px" flat>
+            <q-icon
+              :size="$q.screen.lt.md ? '28px' : '32px'"
+              color="white"
+              name="o_account_circle"
+            />
+          </q-btn>
+        </div>
+      </q-toolbar>
+
+      <!-- Breadcrumbs -->
+      <q-toolbar
+        class="text-weight-medium text-black q-py-3 q-px-4 sec-toolbar-bg"
+        style="height: fit-content; width: 100%"
+      >
+        <q-breadcrumbs v-if="!$route.path.startsWith('/reports')" gutter="sm">
+          <q-breadcrumbs-el class="q-gutter-xs">
+            <q-icon :name="$route.meta.icon" size="24px" />
+            {{ $route.name?.toString() }}
+          </q-breadcrumbs-el>
+        </q-breadcrumbs>
+
+        <q-breadcrumbs v-else gutter="xs">
+          <q-breadcrumbs-el class="text-black q-gutter-xs">
+            <q-icon name="analytics" size="24px" />
+            Reports
+          </q-breadcrumbs-el>
+
+          <q-breadcrumbs-el :label="$route.name?.toString()" />
+        </q-breadcrumbs>
       </q-toolbar>
     </q-header>
 
@@ -33,39 +71,39 @@ export default defineComponent({
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <Transition name="slide-fade" appear mode="out-in">
+        <router-view :key="$route.fullPath" />
+      </Transition>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { useRouter } from "vue-router";
+import { HKMenus, HKReportMenus } from "src/data/menus";
+import { ref } from "vue";
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+export default {
+  name: "DefaultLayout",
+  setup() {
+    const router = useRouter();
+
+    return {
+      router,
+      drawer: ref(true),
+      isActive: false,
+      reportsIsActive: false,
+      HKReportMenus,
+      HKMenus,
+    };
   },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+  methods: {
+    toggleActive(param) {
+      param = !param;
+    },
+    pushRoute(path) {
+      this.router.push(path);
+    },
   },
   {
     title: 'Twitter',
