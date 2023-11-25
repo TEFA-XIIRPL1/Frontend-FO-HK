@@ -1,15 +1,17 @@
+import frontoffice_routes from './frontoffice.router'
 
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
-    ]
+    component: () => import('pages/IndexPage.vue')
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: '/fo',
+    component: () => import('layouts/FOLayout.vue'),
+    children: frontoffice_routes
+  },
+
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')

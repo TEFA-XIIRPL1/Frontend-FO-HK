@@ -1,0 +1,58 @@
+<template>
+  <q-scroll-area class="fit q-px-sm">
+    <q-toolbar class="GPL__toolbar">
+      <q-toolbar-title class="flex flex-center">
+        <q-img src="../assets/img/lingian-logo-colored.png" class="q-my-md" style="width: 180px" />
+      </q-toolbar-title>
+    </q-toolbar>
+
+    <q-item to="/" clickable>
+      <q-item-section avatar>
+        <q-icon size="2rem" name="o_dashboard" />
+      </q-item-section>
+      <q-item-section>Dashboard</q-item-section>
+    </q-item>
+
+    <q-expansion-item class="rounded" label="Front Office" icon="o_contact_page">
+      <template v-for="(r, index) in frontoffice_routes" :key="index">
+        <q-item class="q-mx-md" :to="r.path" clickable>
+          <q-item-section>
+            {{ r.meta.title }}
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-expansion-item>
+
+    <q-expansion-item class="rounded" label="House Keeping" icon="o_cleaning_services">
+    </q-expansion-item>
+
+    <q-expansion-item class="rounded" label="In Room Service" icon="o_door_front">
+    </q-expansion-item>
+
+    <q-separator class="q-my-md" />
+
+    <q-item clickable class="text-negative">
+      <q-item-section avatar>
+        <q-icon name="o_logout" />
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label class="rounded-borders">Logout</q-item-label>
+      </q-item-section>
+    </q-item>
+  </q-scroll-area>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import frontoffice_routes from 'src/router/frontoffice.router'
+
+export default defineComponent({
+  name: 'SideBar',
+  setup() {
+    return {
+      frontoffice_routes
+    }
+  }
+})
+</script>
