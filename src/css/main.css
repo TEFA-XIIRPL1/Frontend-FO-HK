@@ -29,28 +29,34 @@
   font-family: 'Lato';
 }
 
-.q-item {
+.comp-sidebar .q-item {
   border-radius: 10px;
-  opacity: 75%;
+  opacity: 65%;
 }
 
-.q-item.q-router-link--exact-active {
+.comp-sidebar .q-item.q-router-link--exact-active {
   font-weight: bold;
 }
 
-.q-expansion-item .q-item[aria-expanded='true'] {
+.comp-sidebar .q-expansion-item .q-item[aria-expanded='true'] {
   background-color: rgba(var(--primary-rgb), 0.15);
   color: var(--primary);
   font-weight: bold;
 }
 
-.q-item:hover {
+.comp-sidebar .q-item:hover {
   opacity: 100%;
 }
 
 .q-item__section.q-item__section--side.q-item__section--avatar {
   padding: 0px;
   min-width: 40px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
 }
 
 /* page transition  */

@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area class="fit q-px-sm">
+  <q-scroll-area class="fit q-px-sm comp-sidebar">
     <q-toolbar class="GPL__toolbar">
       <q-toolbar-title class="flex flex-center">
         <q-img src="../assets/img/lingian-logo-colored.png" class="q-my-md" style="width: 180px" />
@@ -32,7 +32,7 @@
     <q-separator class="q-my-md" />
 
     <q-item clickable class="text-negative">
-      <q-item-section avatar>
+      <q-item-section avatar class="q-pa-none">
         <q-icon name="o_logout" />
       </q-item-section>
 

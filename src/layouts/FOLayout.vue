@@ -1,15 +1,18 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header bordered class="bg-primary text-white">
-      <q-toolbar>
+    <q-header bordered class="bg-white text-black">
+      <q-toolbar class="items-center">
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title> {{ $route.meta.title }} </q-toolbar-title>
 
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Titl
-        </q-toolbar-title>
+        <q-space />
+        <p class="q-mb-none text-bold text-subtitle1">{{ currentTime }}</p>
+        <q-space />
+
+        <div class="q-gutter-sm row items-center no-wrap">
+          <MessengerFloat />
+          <ProfileFloat />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -28,17 +31,30 @@
 <script>
 import { ref, defineComponent } from 'vue'
 import SideBar from 'src/components/SideBar.vue'
+import MessengerFloat from 'src/components/MessengerFloat.vue'
+import { getCurrentTime } from 'src/utils/time'
+import ProfileFloat from 'src/components/ProfileFloat.vue'
 
 export default defineComponent({
   name: 'FrontOfficeLayout',
-  components: { SideBar },
+  components: { SideBar, MessengerFloat, ProfileFloat },
   setup() {
     const leftDrawerOpen = ref(false)
+    const currentTime = getCurrentTime()
+
     return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      currentTime,
+      leftDrawerOpen
+    }
+  },
+  created() {
+    setInterval(() => {
+      this.currentTime = getCurrentTime()
+    }, 60000)
+  },
+  methods: {
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen
     }
   }
 })
