@@ -1,1 +1,55 @@
 // app global css in SCSS form
+@import 'quasar.variables';
+
+@font-face {
+  font-family: Lato;
+  src: url('../assets/fonts/lato-medium.woff');
+}
+
+* {
+  font-family: 'Lato';
+}
+
+.comp-sidebar {
+  .q-item {
+    border-radius: 10px;
+    opacity: 0.65; // Ubah ke nilai antara 0 hingga 1
+    &.q-router-link--exact-active {
+      font-weight: bold;
+    }
+    &:hover {
+      opacity: 1; // Ubah ke nilai antara 0 hingga 1
+    }
+  }
+
+  .q-expansion-item {
+    .q-item[aria-expanded='true'] {
+      background-color: rgba($primary-rgb, 0.15);
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+}
+
+.q-item__section.q-item__section--side.q-item__section--avatar {
+  padding: 0px;
+  min-width: 40px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+
+/* page transition  */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(-3%);
+  opacity: 0;
+}
