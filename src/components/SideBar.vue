@@ -24,6 +24,22 @@
     </q-expansion-item>
 
     <q-expansion-item class="rounded" label="House Keeping" icon="o_cleaning_services">
+      <template v-for="(r, index) in housekeeping_routes" :key="index">
+        <q-item class="q-mx-md" :to="r.path" clickable>
+          <q-item-section>
+            {{ r.meta.title }}
+          </q-item-section>
+        </q-item>
+      </template>
+      <q-expansion-item class="rounded q-mx-md" label="Reports">
+        <template v-for="(r, index) in hkreports_routes" :key="index">
+          <q-item class="q-mx-md" :to="r.path" clickable>
+            <q-item-section>
+              {{ r.meta.title }}
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-expansion-item>
     </q-expansion-item>
 
     <q-expansion-item class="rounded" label="In Room Service" icon="o_door_front">
@@ -46,12 +62,15 @@
 <script>
 import { defineComponent } from 'vue'
 import frontoffice_routes from 'src/router/frontoffice.router'
+import { housekeeping_routes, hkreports_routes } from 'src/router/housekeeping.router'
 
 export default defineComponent({
   name: 'SideBar',
   setup() {
     return {
-      frontoffice_routes
+      frontoffice_routes,
+      housekeeping_routes,
+      hkreports_routes
     }
   }
 })

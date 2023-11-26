@@ -1,73 +1,18 @@
 <template>
-  <q-page-container>
-    <router-view />
-  </q-page-container>
-</template>
+  <q-layout view="lHh LpR fFf">
+    <q-header bordered class="bg-white text-black">
+      <q-toolbar class="items-center">
+        <!-- <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" /> -->
+        <q-toolbar-title> Lingian Hotel Management System </q-toolbar-title>
 
-<script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'MainLayout'
-})
-</script>
-<!-- 
-<template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <!-- Icon BTNs -->
-        <div>
-          <q-btn round padding="8px" flat>
-            <q-icon
-              :size="$q.screen.lt.md ? '28px' : '32px'"
-              color="white"
-              name="o_notifications"
-            />
-          </q-btn>
-          <q-btn round padding="8px" flat>
-            <q-icon
-              :size="$q.screen.lt.md ? '28px' : '32px'"
-              color="white"
-              name="o_account_circle"
-            />
-          </q-btn>
+        <div class="q-gutter-sm row items-center no-wrap">
+          <ProfileFloat />
         </div>
-      </q-toolbar>
-
-      <!-- Breadcrumbs -->
-      <q-toolbar
-        class="text-weight-medium text-black q-py-3 q-px-4 sec-toolbar-bg"
-        style="height: fit-content; width: 100%"
-      >
-        <q-breadcrumbs v-if="!$route.path.startsWith('/reports')" gutter="sm">
-          <q-breadcrumbs-el class="q-gutter-xs">
-            <q-icon :name="$route.meta.icon" size="24px" />
-            {{ $route.name?.toString() }}
-          </q-breadcrumbs-el>
-        </q-breadcrumbs>
-
-        <q-breadcrumbs v-else gutter="xs">
-          <q-breadcrumbs-el class="text-black q-gutter-xs">
-            <q-icon name="analytics" size="24px" />
-            Reports
-          </q-breadcrumbs-el>
-
-          <q-breadcrumbs-el :label="$route.name?.toString()" />
-        </q-breadcrumbs>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essentia Links </q-item-label>
-
-        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
-      </q-list>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+      <SideBar />
     </q-drawer>
 
     <q-page-container>
@@ -79,69 +24,20 @@ export default defineComponent({
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { HKMenus, HKReportMenus } from "src/data/menus";
-import { ref } from "vue";
+import SideBar from 'src/components/SideBar.vue'
+import ProfileFloat from 'src/components/ProfileFloat.vue'
+import { ref } from 'vue'
 
 export default {
-  name: "DefaultLayout",
-  setup() {
-    const router = useRouter();
-
-    return {
-      router,
-      drawer: ref(true),
-      isActive: false,
-      reportsIsActive: false,
-      HKReportMenus,
-      HKMenus,
-    };
-  },
-  methods: {
-    toggleActive(param) {
-      param = !param;
-    },
-    pushRoute(path) {
-      this.router.push(path);
-    },
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
   setup() {
     const leftDrawerOpen = ref(false)
-
     return {
-      essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
-  }
-})
-</script> -->
+  },
+  components: { SideBar, ProfileFloat }
+}
+</script>
