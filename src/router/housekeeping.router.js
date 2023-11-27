@@ -1,55 +1,55 @@
 export const housekeeping_routes = [
   {
-    path: '/dashboard',
+    path: '/hk/dashboard',
     component: () => import('pages/HK/Dashboard.vue'),
     meta: {
       title: 'Dashboard'
     }
   },
   {
-    path: '/arrival',
+    path: '/hk/arrival',
     component: () => import('pages/HK/ArrivalDepartureRoom.vue'),
     meta: {
       title: 'Arrival Departure Room'
     }
   },
   {
-    path: '/clean-dirty',
+    path: '/hk/clean-dirty',
     component: () => import('pages/HK/CleanAndDirty.vue'),
     meta: {
       title: 'Clean And Dirty Room'
     }
   },
   {
-    path: '/room-occupancy',
+    path: '/hk/room-occupancy',
     component: () => import('pages/HK/RoomOccupancy.vue'),
     meta: {
       title: 'Room Occupancy Overview'
     }
   },
   {
-    path: '/o-o-o-market-rooms',
+    path: '/hk/o-o-o-market-rooms',
     component: () => import('pages/HK/O-O-O.vue'),
     meta: {
       title: 'O-O-O And Off Market Rooms'
     }
   },
   {
-    path: '/status',
+    path: '/hk/status',
     component: () => import('pages/HK/Status.vue'),
     meta: {
       title: 'Status'
     }
   },
   {
-    path: '/rooming-list',
+    path: '/hk/rooming-list',
     component: () => import('pages/HK/RoomingList.vue'),
     meta: {
       title: 'Room Occupancy Overview'
     }
   },
   {
-    path: '/lost-found',
+    path: '/hk/lost-found',
     component: () => import('pages/HK/LostAndFound.vue'),
     meta: {
       title: 'Lost And Found'
@@ -59,21 +59,21 @@ export const housekeeping_routes = [
 
 export const hkreports_routes = [
   {
-    path: '/room-maid-reports',
+    path: '/hk/report/room-maid-reports',
     component: () => import('pages/HK/reports/RoomMaid.vue'),
     meta: {
       title: 'Room Maid Reports'
     }
   },
   {
-    path: '/daily-room-usage',
+    path: '/hk/report/daily-room-usage',
     component: () => import('pages/HK/reports/DailyRoomUsage.vue'),
     meta: {
       title: 'Daily Room Usage'
     }
   },
   {
-    path: '/room-plan',
+    path: '/hk/report/room-plan',
     component: () => import('pages/HK/reports/RoomPlan.vue'),
     meta: {
       title: 'Room Plan'
@@ -81,28 +81,28 @@ export const hkreports_routes = [
   },
 
   {
-    path: '/vip-list',
+    path: '/hk/report/vip-list',
     component: () => import('pages/HK/reports/VipList.vue'),
     meta: {
       title: 'VIP List'
     }
   },
   {
-    path: '/room-change',
+    path: '/hk/report/room-change',
     component: () => import('pages/HK/reports/RoomChange.vue'),
     meta: {
       title: 'Room Change Report'
     }
   },
   {
-    path: '/monthly-room',
+    path: '/hk/report/monthly-room',
     component: () => import('pages/HK/reports/MonthlyRoom.vue'),
     meta: {
       title: 'Monthly Room Occupancy Forecast'
     }
   },
   {
-    path: '/extrabed-availability',
+    path: '/hk/report/extrabed-availability',
     component: () => import('pages/HK/reports/ExtrabedAvailability.vue'),
     meta: {
       title: 'Extrabed Availability'

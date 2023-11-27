@@ -31,6 +31,57 @@
   }
 }
 
+.multi-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+
+  .upper-panel {
+    flex: 1;
+    overflow: auto;
+  }
+
+  .lower-panel {
+    overflow: auto;
+  }
+
+  .resizable-bar {
+    height: 4px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    justify-content: center;
+    background-color: $border;
+
+    .bar {
+      width: 48px;
+      height: 10px;
+      background-color: $border;
+      border-radius: 100px;
+      cursor: row-resize;
+      display: flex;
+
+      div {
+        width: 80%;
+        border-radius: 100px;
+        height: 3px;
+        background-color: rgba($dark-rgb, 0.4);
+        margin: auto;
+      }
+    }
+  }
+}
+
+.fo-menubar {
+  border-bottom: 1px solid $border;
+  white-space: nowrap;
+
+  .q-item--active {
+    background-color: rgba($primary-rgb, 0.15);
+  }
+}
+
 .q-item__section.q-item__section--side.q-item__section--avatar {
   padding: 0px;
   min-width: 40px;

@@ -1,30 +1,30 @@
 const frontoffice_routes = [
   {
-    path: '/guest-list',
+    path: '/fo/guest-list',
     component: () => import('pages/FO/GuestList.vue'),
     meta: {
       title: 'Arrival Guest List'
     }
   },
   {
-    path: '/reports',
-    component: () => import('pages/FO/Reports.vue'),
-    meta: {
-      title: 'Reports'
-    }
-  },
-  {
-    path: '/room-availability',
+    path: '/fo/room-availability',
     component: () => import('pages/FO/RoomAvailability.vue'),
     meta: {
       title: 'Room Availability'
     }
   },
   {
-    path: '/room-plan',
+    path: '/fo/room-plan',
     component: () => import('pages/FO/RoomPlan.vue'),
     meta: {
       title: 'Room Plan'
+    }
+  },
+  {
+    path: '/fo/reports',
+    component: () => import('pages/FO/Reports.vue'),
+    meta: {
+      title: 'Reports'
     }
   }
 ]

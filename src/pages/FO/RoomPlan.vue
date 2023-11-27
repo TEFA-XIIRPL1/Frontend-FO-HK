@@ -1,18 +1,24 @@
 <template>
-  <q-page class="flex flex-center">
-    <h3>Halaman Room Plan</h3>
+  <q-page class="column" style="overflow-y: hidden; min-width: max-content">
+    <FOMenubar>
+      <template #left>
+        <q-chip>Left side</q-chip>
+      </template>
+      <template #right>
+        <q-chip>right side</q-chip>
+      </template>
+    </FOMenubar>
 
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia nam consectetur assumenda ad
-      expedita eligendi id distinctio tempore accusamus iste!
-    </p>
+    <h5>Page: Room Plan goes here...</h5>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import FOMenubar from 'src/components/FOMenubar.vue'
 
 export default defineComponent({
-  name: 'RoomPlanPage'
+  name: 'RoomPlanPage',
+  components: { FOMenubar }
 })
 </script>
