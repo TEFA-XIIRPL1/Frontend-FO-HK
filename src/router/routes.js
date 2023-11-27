@@ -15,7 +15,7 @@ const routes = [
 
   {
     path: '/hk',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/HKLayout.vue'),
     children: housekeeping_routes
   },
 
