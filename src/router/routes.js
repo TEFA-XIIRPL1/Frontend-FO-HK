@@ -21,7 +21,7 @@ const routes = [
 
   {
     path: '/hk/reports',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/HKLayout.vue'),
     children: hkreports_routes
   },
 
