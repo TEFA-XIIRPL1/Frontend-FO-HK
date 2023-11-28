@@ -1,16 +1,14 @@
 <template>
   <!-- With Title -->
-  <q-card v-if="title" class="q-px-md q-py-md relative" style="border-radius: 0 0 25px 25px">
+  <q-card
+    v-if="title"
+    class="q-px-md q-py-md relative"
+    :style="`border-radius: 0 0 ${radius} ${radius}`"
+  >
     <div
       class="full-width flex-center absolute flex justify-center text-subtitle"
-      style="
-        border-radius: 25px 25px 0 0;
-        top: -20px;
-        left: 0;
-        font-weight: 600;
-        padding: 2px;
-        background-color: #c2e7b9;
-      "
+      style="top: -20px; left: 0; font-weight: 600; padding: 2px; background-color: #c2e7b9"
+      :style="`border-radius: ${radius} ${radius} 0 0`"
     >
       {{ title }}
     </div>
@@ -18,7 +16,7 @@
   </q-card>
 
   <!-- W/O Title -->
-  <q-card v-else class="q-px-md q-py-md relative" style="border-radius: 25px">
+  <q-card v-else class="q-px-md q-py-md relative" :style="`border-radius: ${radius}`">
     <slot />
   </q-card>
 </template>
@@ -29,7 +27,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'HKCard',
   props: {
-    title: String
+    title: String,
+    radius: {
+      type: String,
+      default: '25px'
+    }
   }
 })
 </script>
