@@ -3,7 +3,8 @@
   <q-card
     v-if="title"
     class="q-px-md q-py-md relative"
-    :style="`border-radius: 0 0 ${radius} ${radius}`"
+    :class="card_class"
+    :style="`border-radius: 0 0 ${radius} ${radius};` + card_style"
   >
     <div
       class="full-width flex-center absolute flex justify-center text-subtitle"
@@ -16,7 +17,12 @@
   </q-card>
 
   <!-- W/O Title -->
-  <q-card v-else class="q-px-md q-py-md relative" :style="`border-radius: ${radius}`">
+  <q-card
+    v-else
+    class="q-px-md q-py-md"
+    :class="card_class"
+    :style="`border-radius: ${radius};` + card_style"
+  >
     <slot />
   </q-card>
 </template>
@@ -28,6 +34,8 @@ export default defineComponent({
   name: 'HKCard',
   props: {
     title: String,
+    card_class: String,
+    card_style: String,
     radius: {
       type: String,
       default: '25px'
