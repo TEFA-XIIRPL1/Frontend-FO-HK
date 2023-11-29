@@ -50,56 +50,52 @@
     <MultiPane>
       <template #upper>
         <div class="my-table">
-          <q-table
-            :rows="rows"
-            :columns="columns"
-            row-key="name"
-            :table-header-style="{
-              backgroundColor: '#069550',
-              color: '#ffffff',
-              padding: '10px'
-            }"
-          >
+          <q-table :rows="rows" :columns="columns" row-key="name">
+            <template v-slot:header="props">
+              <q-tr class="table-head" :props="props">
+                <q-th
+                  v-for="(col, i) in props.cols"
+                  :key="i"
+                  style="padding-top: 0px; padding-bottom: 0px"
+                >
+                  <q-select
+                    v-if="filterCols.hasOwnProperty(col.name)"
+                    clearable
+                    borderless
+                    dark
+                    label-color="white"
+                    style="min-width: 90px"
+                    v-model="filterCols[col.name].data"
+                    :options="filterCols[col.name].options"
+                    :label="col.label"
+                  >
+                    <template
+                      v-if="allObjectsInArray(filterCols[col.name].options)"
+                      v-slot:option="scope"
+                    >
+                      <q-item v-bind="scope.itemProps">
+                        <q-item-section>
+                          <div class="flex">
+                            <q-icon
+                              size="20px"
+                              v-for="(ic, k) in scope.opt.icons"
+                              :key="k"
+                              :name="ic"
+                            />
+                            <q-item-label class="q-ml-sm">{{ scope.opt.label }}</q-item-label>
+                          </div>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
+                  <span v-else class="text-h6">{{ col.label }}</span>
+                </q-th>
+              </q-tr>
+            </template>
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td key="ResNo" :props="props">
-                  {{ props.row.ResNo }}
-                </q-td>
-                <q-td key="ResResource" :props="props">
-                  {{ props.row.ResResource }}
-                </q-td>
-                <q-td key="RmNo" :props="props">
-                  {{ props.row.RmNo }}
-                </q-td>
-                <q-td key="RType" :props="props">
-                  {{ props.row.RType }}
-                </q-td>
-                <q-td key="BType" :props="props">
-                  {{ props.row.BType }}
-                </q-td>
-                <q-td key="GuestName" :props="props">
-                  {{ props.row.GuestName }}
-                </q-td>
-                <q-td key="Arr" :props="props">
-                  {{ props.row.Arr }}
-                </q-td>
-                <q-td key="Arrival" :props="props">
-                  {{ props.row.Arrival }}
-                </q-td>
-                <q-td key="Depart" :props="props">
-                  {{ props.row.Depart }}
-                </q-td>
-                <q-td key="Night" :props="props">
-                  {{ props.row.Night }}
-                </q-td>
-                <q-td key="RoomBoy" :props="props">
-                  {{ props.row.RoomBoy }}
-                </q-td>
-                <q-td key="RoomRate" :props="props">
-                  {{ props.row.RoomRate }}
-                </q-td>
-                <q-td key="CreatedDate" :props="props">
-                  {{ props.row.CreatedDate }}
+                <q-td v-for="(cell, i) in props.row" :key="i" :style="cell.style">
+                  {{ cell.data }}
                 </q-td>
                 <q-td key="" :props="props" style="width: 10px">
                   <q-btn flat rounded size="13px" style="color: #008444"
@@ -148,6 +144,7 @@ import FOMenubar from 'src/components/FOMenubar.vue'
 import MultiPane from 'src/layouts/MultiPane.vue'
 import GuestForm from 'src/pages/FO/fragments/GuestForm.vue'
 import { defineComponent, ref } from 'vue'
+import { allObjectsInArray } from 'src/utils/datatype'
 
 const searchInput = ref('')
 
@@ -178,156 +175,48 @@ const columns = [
   { name: '', label: '', align: 'center', field: '' }
 ]
 
+const filterCols = {
+  ResNo: {
+    data: '',
+    options: ['Newest', 'Oldest']
+  },
+  BType: {
+    data: '',
+    options: [
+      {
+        icons: ['o_king_bed'],
+        label: 'King bed',
+        value: 'King bed'
+      },
+      {
+        icons: ['o_single_bed', 'o_single_bed'],
+        label: 'Twin bed',
+        value: 'Twin bed'
+      },
+      {
+        icons: ['o_single_bed'],
+        label: 'Single bed',
+        value: 'Single bed'
+      }
+    ]
+  }
+}
+
 const rows = [
   {
-    ResNo: '188086',
-    ResResource: 'WhatsApp',
-    RmNo: '101',
-    RType: 'DLX',
-    BType: 'K',
-    GuestName: 'RONO RUSTAN',
-    Arr: 'RB',
-    Arrival: '12/02/23',
-    Depart: '13/02/23',
-    Night: '1',
-    RoomBoy: 'ILYAS',
-    RoomRate: 'Rp 541,027.00',
-    CreatedDate: '12/02/23'
-  },
-  {
-    ResNo: '188085',
-    ResResource: 'Walk-In',
-    RmNo: '102',
-    RType: 'DLX',
-    BType: 'T',
-    GuestName: 'DZAKIYA',
-    Arr: 'RO',
-    Arrival: '12/02/23',
-    Depart: '13/02/23',
-    Night: '1',
-    RoomBoy: 'RONI',
-    RoomRate: 'Rp 541,027.00',
-    CreatedDate: '12/02/23'
-  },
-  {
-    ResNo: '188084',
-    ResResource: 'WhatsApp',
-    RmNo: '103',
-    RType: 'STD',
-    BType: 'K',
-    GuestName: 'FACHRI',
-    Arr: 'RB',
-    Arrival: '12/02/23',
-    Depart: '13/02/23',
-    Night: '1',
-    RoomBoy: 'YUTA',
-    RoomRate: 'Rp 541,027.00',
-    CreatedDate: '12/02/23'
-  },
-  {
-    ResNo: '188085',
-    ResResource: 'Walk-In',
-    RmNo: '102',
-    RType: 'STD',
-    BType: 'T',
-    GuestName: 'BENI',
-    Arr: 'RB',
-    Arrival: '12/02/23',
-    Depart: '13/02/23',
-    Night: '1',
-    RoomBoy: 'HERTIAMAN',
-    RoomRate: 'Rp 541,027.00',
-    CreatedDate: '12/02/23'
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
-  },
-  {
-    ResNo: '',
-    ResResource: '',
-    RmNo: '',
-    RType: '',
-    BType: '',
-    GuestName: '',
-    Arr: '',
-    Arrival: '',
-    Depart: '',
-    Night: '',
-    RoomBoy: '',
-    RoomRate: '',
-    CreatedDate: ''
+    ResNo: { data: '188086', style: {} },
+    ResResource: { data: 'Whatsapp', style: {} },
+    RmNo: { data: '101', style: { backgroundColor: 'red' } },
+    RType: { data: 'DLX', style: {} },
+    BType: { data: 'K', style: {} },
+    GuestName: { data: 'RONO RUSTAN', style: {} },
+    Arr: { data: 'RB', style: {} },
+    Arrival: { data: '12/02/23', style: {} },
+    Depart: { data: '13/02/23', style: {} },
+    Night: { data: '1', style: {} },
+    RoomBoy: { data: 'ILYAS', style: {} },
+    RoomRate: { data: 'Rp. 541,027.00', style: {} },
+    CreatedDate: { data: '12/02/23', style: {} }
   }
 ]
 
@@ -336,12 +225,22 @@ export default defineComponent({
   components: { FOMenubar, MultiPane, GuestForm },
   data() {
     return {
+      filterCols,
       searchInput,
       datePicker,
       radioInput,
       radioOptions,
       rows,
-      columns
+      columns,
+      allObjectsInArray
+    }
+  },
+  watch: {
+    filterCols: {
+      handler(filters) {
+        console.log(filters)
+      },
+      deep: true
     }
   }
 })

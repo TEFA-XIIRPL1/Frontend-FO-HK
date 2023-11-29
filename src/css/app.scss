@@ -17,7 +17,7 @@
 
     tbody {
       tr {
-        &:hover {
+        &.active {
           background-color: #0677cd !important;
           color: #fff !important;
         }
@@ -28,8 +28,11 @@
       }
     }
   }
+  th {
+    background-color: #069550;
+    color: #ffffff;
+  }
 }
-
 
 .comp-sidebar {
   .q-item {
