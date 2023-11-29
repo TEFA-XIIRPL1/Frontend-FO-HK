@@ -10,6 +10,27 @@
   font-family: 'Lato';
 }
 
+.my-table {
+  .q-table {
+    border: none;
+    border-spacing: 3px;
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: #0677cd !important;
+          color: #fff !important;
+        }
+
+        &:nth-child(even) {
+          background-color: #f8f8f8;
+        }
+      }
+    }
+  }
+}
+
+
 .comp-sidebar {
   .q-item {
     border-radius: 10px;
