@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="isOpen">
-    <q-card style="width: 700px; max-width: 80vw">
+    <q-card style="width: 100%; min-width: 700px; max-width: 80vw">
       <q-toolbar>
         <q-avatar>
           <img src="../assets/img/lingian-logo-colored.png" />
