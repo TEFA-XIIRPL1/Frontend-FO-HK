@@ -26,7 +26,7 @@ const frontoffice_routes = [
     meta: {
       title: 'Reports'
     }
-  }
+  },
 ]
 
 export default frontoffice_routes
