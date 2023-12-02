@@ -180,6 +180,18 @@ const filterCols = {
     data: '',
     options: ['Newest', 'Oldest']
   },
+  ResResource: {
+    data: '',
+    options: ['Whatsapp', 'Walk-In']
+  },
+  RmNo: {
+    data: '',
+    options: ['101-110', '110-101', 'Guaranted', '6 PM', 'Tentative']
+  },
+  RType: {
+    data: '',
+    options: ['DLX', 'STD', 'FML']
+  },
   BType: {
     data: '',
     options: [
@@ -199,6 +211,38 @@ const filterCols = {
         value: 'Single bed'
       }
     ]
+  },
+  GuestName: {
+    data: '',
+    options: ['A-Z', 'Z-A']
+  },
+  Arr: {
+    data: '',
+    options: ['RB', 'RO']
+  },
+  Arrival: {
+    data: '',
+    options: ['Newest', 'Oldest']
+  },
+  Depart: {
+    data: '',
+    options: ['Newest', 'Oldest']
+  },
+  Night: {
+    data: '',
+    options: ['1', '>1']
+  },
+  RoomBoy: {
+    data: '',
+    options: ['ILYAS', 'RONI', 'YUTA', 'HERTIAMAN']
+  },
+  RoomRate: {
+    data: '',
+    options: ['High Price', 'Low Price']
+  },
+  CreatedDate: {
+    data: '',
+    options: ['Newest', 'Oldest']
   }
 }
 
@@ -206,7 +250,7 @@ const rows = [
   {
     ResNo: { data: '188086', style: {} },
     ResResource: { data: 'Whatsapp', style: {} },
-    RmNo: { data: '101', style: { backgroundColor: 'red' } },
+    RmNo: { data: '101', style: { backgroundColor: '#16a75c' } },
     RType: { data: 'DLX', style: {} },
     BType: { data: 'K', style: {} },
     GuestName: { data: 'RONO RUSTAN', style: {} },
@@ -215,8 +259,143 @@ const rows = [
     Depart: { data: '13/02/23', style: {} },
     Night: { data: '1', style: {} },
     RoomBoy: { data: 'ILYAS', style: {} },
-    RoomRate: { data: 'Rp. 541,027.00', style: {} },
+    RoomRate: { data: 'Rp 541,027.00', style: {} },
     CreatedDate: { data: '12/02/23', style: {} }
+  },
+  {
+    ResNo: { data: '188085', style: {} },
+    ResResource: { data: 'Walk-In', style: {} },
+    RmNo: { data: '102', style: { backgroundColor: 'yellow' } },
+    RType: { data: 'DLX', style: {} },
+    BType: { data: 'T', style: {} },
+    GuestName: { data: 'DZAKIYA', style: {} },
+    Arr: { data: 'RO', style: {} },
+    Arrival: { data: '12/02/23', style: {} },
+    Depart: { data: '13/02/23', style: {} },
+    Night: { data: '1', style: {} },
+    RoomBoy: { data: 'RONI', style: {} },
+    RoomRate: { data: 'Rp 541,027.00', style: {} },
+    CreatedDate: { data: '12/02/23', style: {} }
+  },
+  {
+    ResNo: { data: '188084', style: {} },
+    ResResource: { data: 'Whatsapp', style: {} },
+    RmNo: { data: '103', style: { backgroundColor: 'red' } },
+    RType: { data: 'STD', style: {} },
+    BType: { data: 'K', style: {} },
+    GuestName: { data: 'FACHRI', style: {} },
+    Arr: { data: 'RB', style: {} },
+    Arrival: { data: '12/02/23', style: {} },
+    Depart: { data: '13/02/23', style: {} },
+    Night: { data: '1', style: {} },
+    RoomBoy: { data: 'YUTA', style: {} },
+    RoomRate: { data: 'Rp 541,027.00', style: {} },
+    CreatedDate: { data: '12/02/23', style: {} }
+  },
+  {
+    ResNo: { data: '188083', style: {} },
+    ResResource: { data: 'Walk-In', style: {} },
+    RmNo: { data: '102', style: { backgroundColor: '' } },
+    RType: { data: 'STD', style: {} },
+    BType: { data: 'T', style: {} },
+    GuestName: { data: 'BENI', style: {} },
+    Arr: { data: 'RB', style: {} },
+    Arrival: { data: '12/02/23', style: {} },
+    Depart: { data: '13/02/23', style: {} },
+    Night: { data: '1', style: {} },
+    RoomBoy: { data: 'HERTIAMAN', style: {} },
+    RoomRate: { data: 'Rp 541,027.00', style: {} },
+    CreatedDate: { data: '12/02/23', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
+  },
+  {
+    ResNo: { data: '', style: {} },
+    ResResource: { data: '', style: {} },
+    RmNo: { data: '', style: { backgroundColor: '' } },
+    RType: { data: '', style: {} },
+    BType: { data: '', style: {} },
+    GuestName: { data: '', style: {} },
+    Arr: { data: '', style: {} },
+    Arrival: { data: '', style: {} },
+    Depart: { data: '', style: {} },
+    Night: { data: '', style: {} },
+    RoomBoy: { data: '', style: {} },
+    RoomRate: { data: '', style: {} },
+    CreatedDate: { data: '', style: {} }
   }
 ]
 
