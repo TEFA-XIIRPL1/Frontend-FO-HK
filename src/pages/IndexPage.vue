@@ -17,7 +17,7 @@
     </q-drawer>
 
     <q-page-container>
-      <q-page class="q-pa-md">
+      <q-page class="q-pa-md" style="overflow-y: hidden; min-width: max-content">
         <div class="flex items-center justify-between">
           <div>
             <h4 class="q-ma-none text-bold">{{ currentClock }}</h4>
@@ -75,14 +75,25 @@
         </div>
 
         <div class="flex q-gutter-md no-wrap">
-          <div class="col-grow q-pa-md bg-white rounded shadow-3">
+          <div class="col-grow q-pa-md bg-white rounded shadow-3" style="max-width: 660px">
             <h5 class="text-bold q-ma-none">Recent Reservation Schedule</h5>
             <q-date
               v-model="recentReservationDate"
-              class="no-shadow"
-              style="width: 100%; max-width: 400px"
+              class="no-shadow q-pa-none"
+              style="width: 100%"
               minimal
             />
+            <div class="my-table">
+              <q-table clas :rows="recentReservationData" :columns="recentReservationColumns">
+                <template v-slot:body="props">
+                  <q-tr :props="props">
+                    <q-td v-for="(cell, i) in props.row" :key="i" :style="cell.style">
+                      {{ cell.data }}
+                    </q-td>
+                  </q-tr>
+                </template>
+              </q-table>
+            </div>
           </div>
           <div class="col-grow">
             <div class="q-pa-md q-mb-md bg-white rounded shadow-3">
@@ -113,11 +124,52 @@ export default {
 
     const recentReservationDate = ref('')
 
+    const recentReservationColumns = [
+      { name: 'ResNo', label: 'ResNo', field: 'ResNo' },
+      { name: 'GuestName', label: 'Guest Name', field: 'GuestName' },
+      { name: 'RmNo', label: 'RmNo', field: 'RmNo' },
+      { name: 'ReserveResource', label: 'Reserve Resource', field: 'ReserveResource' },
+      { name: 'CreatedDate', label: 'Created Date', field: 'CreatedDate' }
+    ]
+
+    const recentReservationData = [
+      {
+        ResNo: { data: '188086', style: {} },
+        GuestName: { data: 'RONO RUSTAN, HENRY', style: {} },
+        RmNo: { data: '101', style: { backgroundColor: 'green', color: '#ffffff' } },
+        ReserveResource: { data: 'WhatsApp', style: {} },
+        CreatedDate: { data: '12/11/23', style: {} }
+      },
+      {
+        ResNo: { data: '188085', style: {} },
+        GuestName: { data: 'DZAKIYA', style: {} },
+        RmNo: { data: '102', style: { backgroundColor: 'yellow', color: '#000000' } },
+        ReserveResource: { data: 'Walk-In', style: {} },
+        CreatedDate: { data: '12/11/23', style: {} }
+      },
+      {
+        ResNo: { data: '188084', style: {} },
+        GuestName: { data: 'FACHRI', style: {} },
+        RmNo: { data: '103', style: { backgroundColor: 'red', color: '#ffffff' } },
+        ReserveResource: { data: 'WhatsApp', style: {} },
+        CreatedDate: { data: '12/11/23', style: {} }
+      },
+      {
+        ResNo: { data: '188083', style: {} },
+        GuestName: { data: 'BENI', style: {} },
+        RmNo: { data: '104', style: { backgroundColor: 'white', color: '#000000' } },
+        ReserveResource: { data: 'WhatsApp', style: {} },
+        CreatedDate: { data: '12/11/23', style: {} }
+      }
+    ]
+
     return {
       leftDrawerOpen,
       currentClock,
       currentDate,
-      recentReservationDate
+      recentReservationDate,
+      recentReservationColumns,
+      recentReservationData
     }
   },
   components: { SideBar, ProfileFloat, MessengerFloat },
@@ -140,3 +192,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.q-date__view.q-date__calendar {
+  padding-right: 0;
+  padding-left: 0;
+}
+</style>
