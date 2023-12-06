@@ -1,13 +1,27 @@
 <template>
   <q-layout view="lHh LpR fFf">
     <q-header bordered class="bg-white text-black">
-      <q-toolbar class="items-center">
+      <q-toolbar class="items-center q-pa-md text-white bg-dark">
         <!-- <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" /> -->
-        <q-toolbar-title> Lingian Hotel Management System </q-toolbar-title>
+        <q-toolbar-title class="text-weight-bold">
+          Lingian Hotel Management System
+        </q-toolbar-title>
 
         <div class="q-gutter-sm row items-center no-wrap">
           <ProfileFloat />
         </div>
+      </q-toolbar>
+
+      <q-toolbar
+        class="breadcrumb-bg text-weight-medium text-black q-px-md"
+        style="height: fit-content; width: 100%"
+      >
+        <q-breadcrumbs gutter="sm">
+          <q-breadcrumbs-el class="gutter-sm text-dark text-weight-bold">
+            <q-icon :name="$route.meta.icon" size="24px" />
+            {{ $route.meta.title?.toString() }}
+          </q-breadcrumbs-el>
+        </q-breadcrumbs>
       </q-toolbar>
     </q-header>
 
@@ -27,9 +41,13 @@
 import SideBar from 'src/components/SideBar.vue'
 import ProfileFloat from 'src/components/ProfileFloat.vue'
 import { ref } from 'vue'
+import { housekeeping_routes, hkreports_routes } from 'src/router/housekeeping.router'
+import { useRouter } from 'vue-router'
 
 export default {
+  components: { SideBar, ProfileFloat },
   setup() {
+    const router = useRouter()
     const leftDrawerOpen = ref(false)
     return {
       leftDrawerOpen,
@@ -38,6 +56,14 @@ export default {
       }
     }
   },
-  components: { SideBar, ProfileFloat }
+  data() {
+    // housekeeping_routes, hkreports_routes
+  }
 }
 </script>
+
+<style>
+.breadcrumb-bg {
+  background-color: rgba(212, 228, 206, 1);
+}
+</style>

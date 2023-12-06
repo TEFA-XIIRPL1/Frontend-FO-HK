@@ -45,9 +45,9 @@
     <q-expansion-item class="rounded" label="In Room Service" icon="o_door_front">
     </q-expansion-item>
 
-    <q-separator class="q-my-md" />
+    <!-- <q-separator class="q-my-md" /> -->
 
-    <q-item clickable class="text-negative">
+    <!-- <q-item clickable class="text-negative">
       <q-item-section avatar class="q-pa-none">
         <q-icon name="o_logout" />
       </q-item-section>
@@ -55,7 +55,7 @@
       <q-item-section>
         <q-item-label class="rounded-borders">Logout</q-item-label>
       </q-item-section>
-    </q-item>
+    </q-item> -->
   </q-scroll-area>
 </template>
 
