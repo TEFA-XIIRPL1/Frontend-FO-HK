@@ -10,7 +10,8 @@ export const housekeeping_routes = [
     path: '/hk/arrival',
     component: () => import('pages/HK/ArrivalDepartureRoom.vue'),
     meta: {
-      title: 'Arrival Departure Room'
+      title: 'Arrival Departure Room',
+      icon: ''
     }
   },
   {
@@ -45,7 +46,7 @@ export const housekeeping_routes = [
     path: '/hk/rooming-list',
     component: () => import('pages/HK/RoomingList.vue'),
     meta: {
-      title: 'Room Occupancy Overview'
+      title: 'Rooming List'
     }
   },
   {

@@ -23,7 +23,7 @@
     :class="card_class"
     :style="`border-radius: ${radius};` + card_style"
   >
-    <slot />
+    <slot></slot>
   </q-card>
 </template>
 
