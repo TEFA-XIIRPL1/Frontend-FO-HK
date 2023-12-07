@@ -184,7 +184,7 @@
 </template>
 
 <script>
-import HKCard from 'src/components/HKCard.vue'
+import HKCard from 'src/components/HK/HKCard.vue'
 import HKChart from 'src/components/charts/HKChart.vue'
 import { defineComponent } from 'vue'
 
