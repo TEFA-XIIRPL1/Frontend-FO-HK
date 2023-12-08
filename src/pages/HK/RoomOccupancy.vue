@@ -73,14 +73,22 @@
     </HKCard>
     <div class="row justify-between q-mt-md">
       <HKTable
-        :rows="tableRow"
+        :rows="roomTypeVal"
         :columns="tableCol"
         :class="`${$q.screen.lt.md ? 'col-12' : 'col-8 '}`"
       />
       <HKCard radius="20px" card_class="card-shadow q-mt-md radio-card">
         <q-card-section>
-          <div class="text-weight-bold text-h5">Room Type</div>
-          <q-option-group :options="radio_opt" type="radio" v-model="group" color="dark" />
+          <q-form>
+            <div class="text-weight-bold text-h5">Room Type</div>
+            <q-option-group
+              :options="radio_opt"
+              type="radio"
+              v-model="r_group"
+              color="dark"
+              @input="changeRoom"
+            />
+          </q-form>
         </q-card-section>
       </HKCard>
     </div>
@@ -266,38 +274,62 @@ const tableCol = [
   { name: 'status', label: 'status', field: 'status', sortable: true }
 ]
 
-const tableRow = [
-  {
-    name: '101',
-    r_type: 'Deluxe',
-    status: 'Occupied Room'
-  },
-  {
-    name: '102',
-    r_type: 'Deluxe',
-    status: 'Complimentary Room'
-  },
-  {
-    name: '103',
-    r_type: 'Deluxe',
-    status: 'Family Room'
-  },
-  {
-    name: '104',
-    r_type: 'Deluxe',
-    status: 'Occupied Room'
-  },
-  {
-    name: '105',
-    r_type: 'Deluxe',
-    status: 'Occupied Room'
-  },
-  {
-    name: '106',
-    r_type: 'Deluxe',
-    status: 'Occupied Room'
-  }
-]
+const tableRow = {
+  standard: [
+    {
+      name: '101',
+      r_type: 'Standard',
+      status: 'Occupied Room'
+    },
+    {
+      name: '103',
+      r_type: 'Standard',
+      status: 'Family Room'
+    },
+    {
+      name: '104',
+      r_type: 'Standard',
+      status: 'Occupied Room'
+    },
+    {
+      name: '105',
+      r_type: 'Standard',
+      status: 'Occupied Room'
+    },
+    {
+      name: '106',
+      r_type: 'Standard',
+      status: 'Occupied Room'
+    }
+  ],
+  deluxe: [
+    {
+      name: '102',
+      r_type: 'Deluxe',
+      status: 'Complimentary Room'
+    },
+    {
+      name: '103',
+      r_type: 'Deluxe',
+      status: 'Family Room'
+    },
+    {
+      name: '104',
+      r_type: 'Deluxe',
+      status: 'Occupied Room'
+    },
+    {
+      name: '105',
+      r_type: 'Deluxe',
+      status: 'Occupied Room'
+    },
+    {
+      name: '106',
+      r_type: 'Deluxe',
+      status: 'Occupied Room'
+    }
+  ]
+}
 
 const radio_opt = [
   { label: 'Standard Room', value: 'standard' },
@@ -312,7 +344,7 @@ export default defineComponent({
   components: { HKCard, HKChart, HKTable },
   setup() {
     return {
-      group: ref(null),
+      r_group: ref(null),
       model: ref(null),
       options: selectOption,
       roomData,
@@ -324,15 +356,24 @@ export default defineComponent({
     const pieS = handleChart.pieSeries
     const barO = handleChart.barOpt
     const pieO = handleChart.pieOpt
+
+    let roomTypeVal = tableRow.standard
+    let roomVal
     return {
       barS,
       pieS,
       barO,
       pieO,
       tableCol,
-      tableRow
+      roomTypeVal
     }
-  }
+  },
+  methods: {
+    changeRoom(val) {
+      console.log(this.r_group)
+    }
+  },
+  watch: {}
 })
 </script>
 
