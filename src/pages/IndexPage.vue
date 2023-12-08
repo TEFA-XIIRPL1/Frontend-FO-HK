@@ -18,10 +18,15 @@
 
     <q-page-container>
       <q-page class="q-pa-md">
-        <h4 class="q-ma-none text-bold">{{ currentClock }}</h4>
-        <h6 class="q-ma-none text-bold">{{ currentDate }}</h6>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="q-ma-none text-bold">{{ currentClock }}</h4>
+            <h6 class="q-ma-none text-bold">{{ currentDate }}</h6>
+          </div>
+          <q-btn icon="o_add" color="primary" label="Create new reservation" />
+        </div>
 
-        <div class="row q-my-lg" style="gap: 16px">
+        <div class="row no-wrap q-my-lg" style="gap: 16px">
           <div class="dashboard-box">
             <div class="icon">
               <q-icon name="o_calendar_today" />
@@ -31,7 +36,6 @@
               <h5 class="data">008</h5>
             </div>
           </div>
-
           <div class="dashboard-box">
             <div class="icon">
               <q-icon name="o_bed" />
@@ -41,10 +45,9 @@
               <h5 class="data">008</h5>
             </div>
           </div>
-
           <div class="dashboard-box">
             <div class="icon">
-              <q-icon name="o_input" />
+              <q-icon name="o_login" />
             </div>
             <div>
               <p class="label">Check In</p>
@@ -53,7 +56,7 @@
           </div>
           <div class="dashboard-box">
             <div class="icon">
-              <q-icon name="o_output" />
+              <q-icon name="o_logout" />
             </div>
             <div>
               <p class="label">Check Out</p>
@@ -67,6 +70,26 @@
             <div>
               <p class="label">Occupancy Rate</p>
               <h5 class="data">50%</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex q-gutter-md no-wrap">
+          <div class="col-grow q-pa-md bg-white rounded shadow-3">
+            <h5 class="text-bold q-ma-none">Recent Reservation Schedule</h5>
+            <q-date
+              v-model="recentReservationDate"
+              class="no-shadow"
+              style="width: 100%; max-width: 400px"
+              minimal
+            />
+          </div>
+          <div class="col-grow">
+            <div class="q-pa-md q-mb-md bg-white rounded shadow-3">
+              <h5 class="text-bold q-ma-none">Reservation Statistics</h5>
+            </div>
+            <div class="q-pa-md bg-white rounded shadow-3">
+              <h5 class="text-bold q-ma-none">Housekeeping</h5>
             </div>
           </div>
         </div>
@@ -88,10 +111,13 @@ export default {
       currentClock = '-',
       currentDate = '-'
 
+    const recentReservationDate = ref('')
+
     return {
       leftDrawerOpen,
       currentClock,
-      currentDate
+      currentDate,
+      recentReservationDate
     }
   },
   components: { SideBar, ProfileFloat, MessengerFloat },

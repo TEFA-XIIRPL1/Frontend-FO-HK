@@ -1,58 +1,65 @@
 export const housekeeping_routes = [
-  {
-    path: '/hk/dashboard',
-    component: () => import('pages/HK/Dashboard.vue'),
-    meta: {
-      title: 'Dashboard'
-    }
-  },
+  // {
+  //   path: '/hk/dashboard',
+  //   component: () => import('pages/HK/Dashboard.vue'),
+  //   meta: {
+  //     title: 'Dashboard'
+  //   }
+  // },
   {
     path: '/hk/arrival',
     component: () => import('pages/HK/ArrivalDepartureRoom.vue'),
     meta: {
-      title: 'Arrival Departure Room'
+      title: 'Arrival Departure Room',
+      icon: 'task'
     }
   },
   {
     path: '/hk/clean-dirty',
     component: () => import('pages/HK/CleanAndDirty.vue'),
     meta: {
-      title: 'Clean And Dirty Room'
+      title: 'Clean And Dirty Room',
+      icon: 'cleaning_services'
     }
   },
   {
     path: '/hk/room-occupancy',
     component: () => import('pages/HK/RoomOccupancy.vue'),
     meta: {
-      title: 'Room Occupancy Overview'
+      title: 'Room Occupancy Overview',
+      icon: 'bed'
     }
   },
   {
     path: '/hk/o-o-o-market-rooms',
     component: () => import('pages/HK/O-O-O.vue'),
     meta: {
-      title: 'O-O-O And Off Market Rooms'
+      title: 'O-O-O And Off Market Rooms',
+      icon: 'warning'
     }
   },
   {
     path: '/hk/status',
     component: () => import('pages/HK/Status.vue'),
     meta: {
-      title: 'Status'
+      title: 'Status',
+      icon: 'rule'
     }
   },
   {
     path: '/hk/rooming-list',
     component: () => import('pages/HK/RoomingList.vue'),
     meta: {
-      title: 'Room Occupancy Overview'
+      title: 'Rooming List',
+      icon: 'o_meeting_room'
     }
   },
   {
     path: '/hk/lost-found',
     component: () => import('pages/HK/LostAndFound.vue'),
     meta: {
-      title: 'Lost And Found'
+      title: 'Lost And Found',
+      icon: 'nest_eco_leaf'
     }
   }
 ]

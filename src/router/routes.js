@@ -8,6 +8,20 @@ const routes = [
   },
 
   {
+    path: '/guest',
+    component: () => import('layouts/BlankLayout.vue'),
+    children: [
+      {
+        path: '/guest/login',
+        component: () => import('pages/Login.vue'),
+        meta: {
+          title: 'Login'
+        }
+      }
+    ]
+  },
+
+  {
     path: '/fo',
     component: () => import('layouts/FOLayout.vue'),
     children: frontoffice_routes
