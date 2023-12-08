@@ -9,6 +9,63 @@
 * {
   font-family: 'Lato';
 }
+.width-image {
+  width: 250px;
+  height: 100%;
+}
+
+.padding-expansion .q-item {
+  padding: 0;
+}
+
+.rows-table thead tr th {
+  position: sticky;
+  background-color: white;
+  z-index: 1;
+  top: 0;
+}
+
+textarea {
+  height: 205px;
+}
+
+div.q-item__label,
+div.q-item__section {
+  width: fit-content;
+}
+
+.q-field__native span {
+  white-space: nowrap;
+}
+
+.dropdown-date span.q-btn__content {
+  justify-content: left;
+  text-align: left;
+}
+
+div.q-menu.q-position-engine {
+  min-width: 0px !important;
+}
+
+span.q-btn__content span.block {
+  flex: 1 1 0%;
+}
+
+i.q-icon.on-left {
+  color: #16a75c;
+}
+
+i.q-icon.notranslate {
+  color: #16a75c;
+}
+
+.border-button {
+  border: 1.5px $border solid;
+  padding-right: 7px;
+  padding-left: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 .bg-primary-tint {
   background-color: rgba($primary-rgb, 0.15);
@@ -57,6 +114,10 @@
       font-weight: bold;
     }
   }
+}
+
+.bg-primary-tint {
+  background-color: rgba($primary-rgb, 0.15);
 }
 
 .rounded {
