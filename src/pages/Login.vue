@@ -81,18 +81,10 @@ export default defineComponent({
           password: this.dataModel.password
         },
         ({ status, data }) => {
-          console.log(this.$AuthStore.getUser())
-          console.log(this.$AuthStore.getAccessToken())
-
           if (status == 200) {
             this.$AuthStore.setUser(data['user'])
             this.$AuthStore.setAccessToken(data['accessToken'])
-
-            setTimeout(() => {
-              console.log('BARRUUUUU')
-              console.log(this.$AuthStore.getUser())
-              console.log(this.$AuthStore.getAccessToken())
-            }, 1000)
+            this.$router.go('/')
           }
 
           this.loading = false

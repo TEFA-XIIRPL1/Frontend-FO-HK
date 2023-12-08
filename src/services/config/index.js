@@ -31,8 +31,8 @@ export const Config = {
     return url
   },
   logout() {
+    console.log('clear storage...')
     LocalStorage.clear()
     SessionStorage.clear()
-    window.location.assign('/')
   }
 }
