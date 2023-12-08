@@ -6,6 +6,7 @@ import {
   createWebHashHistory
 } from 'vue-router'
 import routes from './routes'
+import { authStore } from 'src/stores/auth'
 
 /*
  * If not building with SSR mode, you can
@@ -15,6 +16,11 @@ import routes from './routes'
  * async/await or return a Promise which resolves
  * with the Router instance.
  */
+
+const isAuthenticated = () => {
+  const token = authStore().getAccessToken()
+  return !!token
+}
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
@@ -34,8 +40,14 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
+    if (to.meta.protected && !isAuthenticated()) {
+      next('/auth/login')
+    } else if (to.path === '/auth/login' && isAuthenticated()) {
+      next('/')
+    } else {
+      next()
+    }
     document.title = (to.meta.title || 'Hotel Management System') + ' - Lingian Hotel'
-    next()
   })
 
   return Router
