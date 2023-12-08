@@ -5,33 +5,45 @@
         <q-img
           src="../assets/img/lingian-logo-colored.png"
           class="q-my-md q-mx-auto"
-          style="width: 180px"
+          style="width: 150px"
         />
       </div>
       <h6 class="text-bold q-ma-none text-center">Welcome to <br />Management System</h6>
       <p class="text-center">Lingian Hotel & Convention</p>
-      <q-form @submit="onSubmit" class="column q-mt-md q-gutter-xs" style="min-width: 280px">
+      <q-form @submit.prevent="login" class="column q-mt-md q-gutter-sm" style="min-width: 280px">
         <q-input
           outlined
           type="email"
           dense
-          v-model="email"
+          v-model="dataModel.email"
           label="Email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please type something',
+            (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || 'Invalid email format'
+          ]"
         />
 
         <q-input
           outlined
           dense
-          type="password"
-          v-model="password"
+          :type="showPwd ? 'text' : 'password'"
+          v-model="dataModel.password"
           label="Password"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-        />
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="showPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="showPwd = !showPwd"
+            />
+          </template>
+        </q-input>
+
         <a href="" class="self-end q-mb-sm">Forgot password?</a>
-        <q-btn label="login" type="submit" class="width-full" color="primary" />
+        <q-btn label="login" type="submit" class="width-full" color="primary" :loading="loading" />
       </q-form>
     </div>
   </q-page>
@@ -39,29 +51,53 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'LoginPage',
+
   setup() {
-    const $q = useQuasar()
-
-    const email = ref(null)
-    const password = ref(null)
-
     return {
-      email,
-      password
+      showPwd: ref(false)
+    }
+  },
+  data() {
+    return {
+      api: new this.$Api('frontoffice'),
+      loading: false,
+      dataModel: {
+        email: ref(null),
+        password: ref(null)
+      }
     }
   },
   methods: {
-    onSubmit() {
-      $q.notify({
-        color: 'green-4',
-        textColor: 'white',
-        icon: 'cloud_done',
-        message: 'Submitted'
-      })
+    login() {
+      this.loading = true
+
+      this.api.post(
+        'auth/user/login',
+        {
+          email: this.dataModel.email,
+          password: this.dataModel.password
+        },
+        ({ status, data }) => {
+          console.log(this.$AuthStore.getUser())
+          console.log(this.$AuthStore.getAccessToken())
+
+          if (status == 200) {
+            this.$AuthStore.setUser(data['user'])
+            this.$AuthStore.setAccessToken(data['accessToken'])
+
+            setTimeout(() => {
+              console.log('BARRUUUUU')
+              console.log(this.$AuthStore.getUser())
+              console.log(this.$AuthStore.getAccessToken())
+            }, 1000)
+          }
+
+          this.loading = false
+        }
+      )
     }
   }
 })
