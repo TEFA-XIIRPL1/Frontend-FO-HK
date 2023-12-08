@@ -9,9 +9,35 @@
 * {
   font-family: 'Lato';
 }
-.bg-primary-tint{
-  background-color:rgba($primary-rgb, 0.15); 
+
+.bg-primary-tint {
+  background-color: rgba($primary-rgb, 0.15);
 }
+
+.my-table {
+  .q-table {
+    border: none;
+    border-spacing: 3px;
+
+    tbody {
+      tr {
+        &.active {
+          background-color: #0677cd !important;
+          color: #fff !important;
+        }
+
+        &:nth-child(even) {
+          background-color: #f8f8f8;
+        }
+      }
+    }
+  }
+  th {
+    background-color: #069550;
+    color: #ffffff;
+  }
+}
+
 .comp-sidebar {
   .q-item {
     border-radius: 10px;

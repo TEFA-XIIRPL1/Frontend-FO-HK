@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="fo-menubar border bg-white">
+  <q-toolbar class="fo-menubar border bg-white items-stretch">
     <slot name="left"></slot>
 
     <q-separator vertical />
