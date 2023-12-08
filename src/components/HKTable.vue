@@ -40,6 +40,7 @@ export default defineComponent({
   border-color: #ffffff;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  font-weight: 600;
 }
 .tableComp .q-table tbody td {
   font-size: 14px;

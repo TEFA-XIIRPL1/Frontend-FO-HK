@@ -1,12 +1,11 @@
 <template>
-  <q-page class="q-pa-md ">
+  <q-page class="q-pa-md">
     <div class="q-pa-md">
       <div class="row flex q-gutter-md flex-center q-pa-xl">
         <HKCard
           card_class="q-col-xs-12 q-col-sm-6 q-col-md-4 q-col-lg-3"
           card_style="width:230px; height:330px;"
           radius="5px"
-          :xs="column"
         >
           <div class="column">
             <div class="row">
@@ -261,7 +260,65 @@
           </div>
         </HKCard>
       </div>
-      <div class="tableComp">
+      <div class="row q-px-md">
+        <div class="row ">
+          <p class="text-weight-bold text-body1 q-mt-sm">Sorting :</p>
+          <q-select
+            v-model="selectedColumn"
+            
+            dense
+            standout
+            outlined
+            style="width: 210px"
+            class="q-pl-sm"
+            dropdown-icon="expand_more"
+            no-caps
+            radius="200px"
+            :options="columns"
+            option-value="field"
+            option-label="label"
+          />
+        </div>
+        <div class="row q-ml-auto">
+        <div class="row q-pr-lg">
+          <p class="text-weight-bold text-body1 q-mt-sm">Arrival :</p>
+          <q-select
+            v-model="selectedColumn"
+            
+            dense
+            standout
+            outlined
+            style="width: 210px"
+            class="q-pl-sm"
+            dropdown-icon="expand_more"
+            no-caps
+            radius="200px"
+            :options="columns"
+            option-value="field"
+            option-label="label"
+          />
+        </div>
+        <div class="row">
+          <p class="text-weight-bold text-body1 q-mt-sm">Departure :</p>
+          <q-select
+            v-model="selectedColumn"
+            
+            dense
+            standout
+            outlined
+            style="width: 210px"
+            class="q-pl-sm"
+            dropdown-icon="expand_more"
+            no-caps
+            radius="200px"
+            :options="columns"
+            option-value="field"
+            option-label="label"
+          />
+        </div>
+      </div>
+      </div>
+      <div class="tableComp q-mt-md">
         <q-table
           :rows="rows"
           :columns="columns"
@@ -346,7 +403,8 @@ export default defineComponent({
   setup() {
     return {
       columns,
-      rows
+      rows,
+      selectedColumn: null,
     }
   }
 })
