@@ -305,10 +305,15 @@
 
       <q-separator class="q-my-sm bg-grey" size="1px" />
 
-      <q-expansion-item label="Room Rate: Rp 0.00" class="padding-expansion">
+      <q-expansion-item
+        label="Room Rate: Rp 0.00"
+        class="padding-expansion q-pa-none"
+        dense
+        style="font-weight: bold"
+      >
         <q-card>
           <q-table
-            style="height: 140px"
+            style="max-width: 400px; height: 140px"
             dense
             :rows-per-page-options="[0]"
             virtual-scroll
@@ -321,28 +326,34 @@
             :selected-rows-label="getSelectedString"
             v-model:selected.sync="selected"
           />
-
-          <q-btn unelevated dense class="q-mt-sm text-capitalize" color="primary" label="Payment" />
         </q-card>
+        <q-btn
+          unelevated
+          dense
+          to="/fo/guest-invoice"
+          class="q-mt-sm text-capitalize"
+          color="primary"
+          label="Payment"
+        />
       </q-expansion-item>
-
-      <div style="display: flex; justify-content: space-between" class="q-mt-sm">
-        <div class="text-bold">Total:</div>
-        <div>Rp 0.00</div>
-      </div>
 
       <q-separator class="q-mt-sm bg-grey" size="1px" />
 
       <div style="display: flex; justify-content: space-between" class="q-mt-sm">
-        <div class="text-bold">Balance:</div>
-        <div>Rp 0.00</div>
+        <p class="text-bold q-ma-none">Balance:</p>
+        <p class="text-bold q-ma-none">Rp 0.00</p>
       </div>
 
       <q-separator class="q-mt-sm bg-grey" size="1px" />
     </div>
 
     <div class="col-grow">
-      <q-expansion-item label="Reservation Remarks" class="padding-expansion">
+      <q-expansion-item
+        dense
+        style="font-weight: bold"
+        label="Reservation Remarks"
+        class="padding-expansion"
+      >
         <q-card>
           <q-input
             v-model="textarea"
