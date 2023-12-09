@@ -1,5 +1,13 @@
 <template>
-  <q-page class="column" style="overflow-y: hidden; min-width: max-content">
+  <q-page
+    class="column"
+    style="
+      overflow-y: hidden;
+      width: 100%;
+      min-width: max-content;
+      min-height: calc(100vh - 51.25px);
+    "
+  >
     <FOMenubar>
       <template #left>
         <div class="px-2">
@@ -50,7 +58,7 @@
     <MultiPane>
       <template #upper>
         <div class="my-table">
-          <q-table :rows="rows" :columns="columns" row-key="name">
+          <q-table class="no-shadow" :rows="rows" :columns="columns" row-key="name">
             <template v-slot:header="props">
               <q-tr class="table-head" :props="props">
                 <q-th
