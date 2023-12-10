@@ -261,62 +261,41 @@
         </HKCard>
       </div>
       <div class="row q-px-md">
-        <div class="row ">
+        <div class="row sorting">
           <p class="text-weight-bold text-body1 q-mt-sm">Sorting :</p>
           <q-select
             v-model="selectedColumn"
-            
             dense
+            round
             standout
             outlined
-            style="width: 210px"
+            style="width: 210px; border-radius: 10px"
             class="q-pl-sm"
             dropdown-icon="expand_more"
             no-caps
-            radius="200px"
             :options="columns"
             option-value="field"
             option-label="label"
           />
         </div>
         <div class="row q-ml-auto">
-        <div class="row q-pr-lg">
-          <p class="text-weight-bold text-body1 q-mt-sm">Arrival :</p>
-          <q-select
-            v-model="selectedColumn"
-            
-            dense
-            standout
-            outlined
-            style="width: 210px"
-            class="q-pl-sm"
-            dropdown-icon="expand_more"
-            no-caps
-            radius="200px"
-            :options="columns"
-            option-value="field"
-            option-label="label"
-          />
+          <div class="row q-pr-lg q-gutter-sm arrival">
+            <div>
+              <p class="text-weight-bold text-body1 q-mt-sm">Arrival :</p>
+            </div>
+            <div>
+              <HKDateInput style="height: 10px; border-radius: 10px" size="16px" />
+            </div>
+          </div>
+          <div class="row q-gutter-sm">
+            <div>
+              <p class="text-weight-bold text-body1 q-mt-sm">Departure :</p>
+            </div>
+            <div>
+              <HKDateInput style="height: 10px; border-radius: 10px" size="16px" />
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <p class="text-weight-bold text-body1 q-mt-sm">Departure :</p>
-          <q-select
-            v-model="selectedColumn"
-            
-            dense
-            standout
-            outlined
-            style="width: 210px"
-            class="q-pl-sm"
-            dropdown-icon="expand_more"
-            no-caps
-            radius="200px"
-            :options="columns"
-            option-value="field"
-            option-label="label"
-          />
-        </div>
-      </div>
       </div>
       <div class="tableComp q-mt-md">
         <q-table
@@ -394,17 +373,17 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import HKCard from 'src/components/HKCard.vue'
-import HKTable from 'src/components/HKTable.vue'
+import HKCard from 'src/components/HK/HKCard.vue'
+import HKDateInput from 'src/components/HK/HKDateInput.vue'
 
 export default defineComponent({
   name: 'CleanDirtyPage',
-  components: { HKCard },
+  components: { HKCard, HKDateInput },
   setup() {
     return {
       columns,
       rows,
-      selectedColumn: null,
+      selectedColumn: null
     }
   }
 })
@@ -517,4 +496,21 @@ const rows = [
 .tableComp .disabled * {
   opacity: 0;
 }
+
+@media (max-width: 949px) {
+      .q-ml-auto {
+        margin-right: auto !important;
+      }
+    }
+
+    @media (max-width: 687px) {
+      .q-ml-auto {
+        margin-left: 5px !important;
+      }
+    }
+    @media (max-width: 391px) {
+      .sorting {
+        flex-direction: column;
+      }
+    }
 </style>
