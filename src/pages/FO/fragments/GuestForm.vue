@@ -4,7 +4,7 @@
       <q-img src="/src/assets/img/thumbnaul-form.png" class="width-image rounded-borders" />
     </div>
 
-    <div class="q-pr-sm">
+    <div class="q-pr-sm col-grow">
       <div style="justify-content: space-between; display: flex">
         <div style="display: flex; gap: 5px">
           <q-btn flat square color="primary" class="border-button rounded-borders">
@@ -59,7 +59,7 @@
           </q-btn>
         </div>
 
-        <div>
+        <div style="display: flex; gap: 5px">
           <q-btn
             flat
             square
@@ -75,7 +75,103 @@
               justify-content: center;
             "
           />
+
+          <q-btn
+            flat
+            square
+            color="primary"
+            icon="o_payment"
+            class="border-button rounded-borders"
+            style="
+              padding-right: 4px;
+              padding-left: 4px;
+              align-items: center;
+              justify-content: center;
+            "
+            @click="icon = true"
+          />
         </div>
+
+        <q-dialog v-model="icon">
+          <q-card>
+            <q-card-section class="items-center q-pb-none">
+              <div class="row items-center">
+                <div class="text-sm text-bold">Input Your Id Card Number KTP/SIM</div>
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </div>
+              <q-separator class="" style="background: rgba(0, 0, 0, 0.5)" size="1.5px" />
+            </q-card-section>
+
+            <q-card-section>
+              <div class="row items-center" style="justify-content: space-between">
+                <div>Name on Id card</div>
+                <div style="display: flex">
+                  <q-btn
+                    flat
+                    v-model="isKtpSelected"
+                    square
+                    dense
+                    class="q-px-sm"
+                    :class="{ 'background-primary': isKtpSelected }"
+                    style="
+                      border: 1.5px #eeeeee solid;
+                      height: fit-content;
+                      border-radius: 10px 0px 0px 10px;
+                    "
+                    @click="toggleKtpSelected"
+                  >
+                    KTP
+                  </q-btn>
+                  <q-btn
+                    flat
+                    square
+                    v-model="isSimSelected"
+                    dense
+                    class="q-px-sm"
+                    :class="{ 'background-primary': isSimSelected }"
+                    style="
+                      border: 1.5px #eeeeee solid;
+                      height: fit-content;
+                      border-radius: 0px 10px 10px 0px;
+                    "
+                    @click="toggleSimSelected"
+                  >
+                    SIM
+                  </q-btn>
+                </div>
+              </div>
+              <q-input dense outlined v-model="nameidcard" class="q-mt-sm" style="width: " />
+              <div class="q-mt-sm">Id Card Number</div>
+              <q-input dense outlined v-model="idcardnumber" class="q-mt-sm" style="width: 360px" />
+
+              <div class="q-mt-sm">Address</div>
+              <q-input dense outlined v-model="address" class="q-mt-sm" style="width: 360px" />
+
+              <div class="row q-mt-sm" style="justify-content: space-between">
+                <q-btn
+                  outline
+                  square
+                  color="black"
+                  dense
+                  class="rounded-borders text-capitalize text-black"
+                  style="width: 60px"
+                >
+                  Cancel
+                </q-btn>
+                <q-btn
+                  flat
+                  square
+                  dense
+                  class="rounded-borders text-capitalize"
+                  style="background-color: #069550; color: white; width: 50px"
+                >
+                  Add
+                </q-btn>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </div>
 
       <q-input
@@ -83,10 +179,8 @@
         outlined
         v-model="text"
         label="Guest Name/ No Handphone"
-        class="q-mt-sm"
-        style="width: 360px"
+        class="q-mt-sm full-width"
       />
-
       <div style="display: flex; gap: 8px; align-items: center" class="q-mt-sm">
         <div class="bg-primary-tint text-primary text-bold q-px-sm rounded-borders">#ResNo</div>
 
@@ -97,7 +191,7 @@
           :options="reservation"
           label="Reservation Resource"
           dropdown-icon="expand_more"
-          class="full-width"
+          class="col-grow"
         />
       </div>
 
@@ -109,7 +203,7 @@
           :options="rmtype"
           label="RmType"
           dropdown-icon="expand_more"
-          class="full-width flex-1"
+          class="full-width"
         />
 
         <q-select
@@ -119,7 +213,7 @@
           :options="roomno"
           label="Room No"
           dropdown-icon="expand_more"
-          class="full-width flex-1"
+          class="full-width"
         />
 
         <q-select
@@ -129,7 +223,7 @@
           :options="typebedModel"
           label="Type Bed"
           dropdown-icon="expand_more"
-          class="full-width flex-1"
+          class="full-width"
         >
           <template v-slot:option="typebedModel">
             <q-item v-bind="typebedModel.itemProps">
@@ -272,10 +366,10 @@
       </q-btn-dropdown>
     </div>
 
-    <div class="q-pr-sm">
-      <div style="display: flex; align-items: center; gap: 80px">
+    <div class="q-pr-sm full-width" style="max-width: 350px">
+      <div style="display: flex; align-items: center; justify-content: space-between">
         <div style="display: flex; align-items: center">
-          <div class="text-bold" style="width: 130px">Res Status:</div>
+          <div class="text-bold col-grow q-pr-xs">Res Status:</div>
           <q-select
             outlined
             dense
@@ -283,34 +377,40 @@
             :options="resstatus"
             label="Status"
             dropdown-icon="expand_more"
-            class="full-width flex-1"
+            style="width: 130px"
           />
         </div>
 
         <div style="display: flex">
           <q-btn
             flat
+            v-model="isRbSelected"
             square
             dense
             class="q-px-sm"
+            :class="{ 'background-primary': isRbSelected }"
             style="
               border: 1.5px #eeeeee solid;
               height: fit-content;
               border-radius: 10px 0px 0px 10px;
             "
+            @click="toggleRbSelected"
           >
             RB
           </q-btn>
           <q-btn
             flat
             square
+            v-model="isRoSelected"
             dense
             class="q-px-sm"
+            :class="{ 'background-primary': isRoSelected }"
             style="
               border: 1.5px #eeeeee solid;
               height: fit-content;
               border-radius: 0px 10px 10px 0px;
             "
+            @click="toggleRoSelected"
           >
             RO
           </q-btn>
@@ -320,78 +420,35 @@
       <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1.5px" />
 
       <q-expansion-item label="Room Rate: Rp 0.00" class="padding-expansion">
-        <q-card style="max-width: 328px">
+        <q-card class="full-width">
           <q-table
-            style="height: 105px"
+            style="height: 145px"
             dense
             :rows-per-page-options="[0]"
             virtual-scroll
             :rows="rows"
             hide-pagination
             selection="multiple"
-            class="rows-table"
+            class="rows-table q-px-none"
             :columns="columns"
             row-key="date"
-            :selected-rows-label="getSelectedString"
             v-model:selected.sync="selected"
           />
-
-          <div style="display: flex; justify-content: space-between" class="q-mt-sm">
-            <q-btn
-              flat
-              square
-              dense
-              class="rounded-borders text-capitalize q-mx-xs"
-              style="background-color: #069550; color: white; padding: 0 15px"
-            >
-              Payment
-            </q-btn>
-
-            <div style="display: flex; gap: 10px">
-              <q-btn
-                flat
-                square
-                color="primary"
-                icon="o_find_in_page"
-                class="border-button rounded-borders"
-                style="
-                  padding-bottom: 5px;
-                  padding-top: 5px;
-                  padding-right: 6px;
-                  padding-left: 6px;
-                  align-items: center;
-                  justify-content: center;
-                "
-              />
-
-              <q-btn
-                flat
-                square
-                color="primary"
-                icon="o_print"
-                class="border-button rounded-borders"
-                style="
-                  padding-bottom: 5px;
-                  padding-top: 5px;
-                  padding-right: 6px;
-                  padding-left: 6px;
-                  align-items: center;
-                  justify-content: center;
-                "
-              />
-            </div>
-          </div>
         </q-card>
       </q-expansion-item>
 
-      <div style="display: flex; justify-content: space-between" class="q-mt-sm">
-        <div class="text-bold">Total:</div>
-        <div>Rp 0.00</div>
-      </div>
+      <q-btn
+        flat
+        square
+        dense
+        class="rounded-borders text-capitalize q-mt-sm q-mx-xs"
+        style="background-color: #069550; color: white; padding: 0 15px"
+        @click="icon = true"
+      >
+        Invoice
+      </q-btn>
 
-      <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1px" />
-
-      <div style="display: flex; justify-content: space-between" class="q-mt-sm">
+      <div style="display: flex; justify-content: space-between" class="q-mt-sm q-mx-sm">
         <div class="text-bold">Balance:</div>
         <div>Rp 0.00</div>
       </div>
@@ -399,7 +456,7 @@
       <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1px" />
     </div>
 
-    <div class="full-width">
+    <div class="col-grow">
       <q-expansion-item label="Reservation Remarks" class="padding-expansion">
         <q-card>
           <q-input v-model="textarea" label="Note..." filled type="textarea" />
@@ -446,6 +503,10 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   name: 'GuestForm',
   setup() {
+    const isRbSelected = ref(false)
+    const isRoSelected = ref(false)
+    const isKtpSelected = ref(false)
+    const isSimSelected = ref(false)
     const datePicker = ref({ from: null, to: null })
     const formattedDate = ref('Arrival - Depature, 1 Nights')
     const labeldropdown = ref('1 Adult, 0 Child, 0 Baby')
@@ -510,17 +571,32 @@ export default defineComponent({
       }
     }
 
-    function updateDropdownLabel() {
-      // Logika penentuan label dropdown berdasarkan tanggal bisa ditempatkan di sini
-      // ...
-    }
-
     function updateGuestCount(type, value) {
       // Memastikan jumlah tidak kurang dari 0
       guestCounts.value[type] = Math.max(0, guestCounts.value[type] + value)
 
       // Mengupdate label dropdown
       updateDropdownLabel()
+    }
+
+    function toggleRbSelected() {
+      isRbSelected.value = !isRbSelected.value
+      isRoSelected.value = false // Reset the state of RO button
+    }
+
+    function toggleRoSelected() {
+      isRoSelected.value = !isRoSelected.value
+      isRbSelected.value = false // Reset the state of RB button
+    }
+
+    function toggleKtpSelected() {
+      isKtpSelected.value = !isKtpSelected.value
+      isSimSelected.value = false // Reset the state of SIM button
+    }
+
+    function toggleSimSelected() {
+      isSimSelected.value = !isSimSelected.value
+      isKtpSelected.value = false // Reset the state of KTP button
     }
 
     function updateDropdownLabel() {
@@ -532,8 +608,20 @@ export default defineComponent({
     }
 
     return {
+      isRbSelected,
+      isRoSelected,
+      toggleRbSelected,
+      toggleRoSelected,
+      isKtpSelected,
+      isSimSelected,
+      toggleKtpSelected,
+      toggleSimSelected,
+      icon: ref(false),
       columns,
       rows,
+      nameidcard: ref(''),
+      idcardnumber: ref(''),
+      address: ref(''),
       datePicker,
       formattedDate,
       formatDate,
@@ -550,7 +638,7 @@ export default defineComponent({
       bedmodel: ref(null),
       resstatusmodel: ref(null),
       resstatus: ['Guaranted', '6 PM', 'Tentative'],
-      reservation: ['Whatsapp', 'Walk In'],
+      reservation: ['Individual reservation', 'Walk In'],
       rmtype: ['Deluxe (DLXX)', 'Standard (STD)', 'Family(FML)'],
       roomno: ['101', '102', '103'],
       typebed: ['King Bed', 'Twin Bed', 'Single Bed'],
@@ -591,3 +679,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.background-primary {
+  background-color: #069550 !important;
+  color: white;
+}
+</style>
