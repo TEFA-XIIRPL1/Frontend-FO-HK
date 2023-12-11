@@ -1,98 +1,82 @@
 <template>
-  <div class="q-mt-sm" style="display: flex">
-    <div class="q-pr-sm">
+  <div class="q-mt-sm row no-wrap q-gutter-md">
+    <div class="">
       <q-img src="/src/assets/img/thumbnaul-form.png" class="width-image rounded-borders" />
     </div>
 
-    <div class="q-pr-sm col-grow">
-      <div style="justify-content: space-between; display: flex">
-        <div style="display: flex; gap: 5px">
-          <q-btn flat square color="primary" class="border-button rounded-borders">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="19"
-              height="20"
-              viewBox="0 0 19 20"
-              fill="none"
-            >
-              <path
-                d="M16 10.09V4C16 1.79 12.42 0 8 0C3.58 0 0 1.79 0 4V14C0 16.21 3.59 18 8 18C8.46 18 8.9 18 9.33 17.94C9.1129 17.3162 9.00137 16.6605 9 16V15.95C8.68 16 8.35 16 8 16C4.13 16 2 14.5 2 14V11.77C3.61 12.55 5.72 13 8 13C8.65 13 9.27 12.96 9.88 12.89C10.4127 12.0085 11.1638 11.2794 12.0607 10.7731C12.9577 10.2668 13.9701 10.0005 15 10C15.34 10 15.67 10.04 16 10.09ZM14 9.45C12.7 10.4 10.42 11 8 11C5.58 11 3.3 10.4 2 9.45V6.64C3.47 7.47 5.61 8 8 8C10.39 8 12.53 7.47 14 6.64V9.45ZM8 6C4.13 6 2 4.5 2 4C2 3.5 4.13 2 8 2C11.87 2 14 3.5 14 4C14 4.5 11.87 6 8 6ZM19 15V17H16V20H14V17H11V15H14V12H16V15H19Z"
-                fill="#008444"
-              />
-            </svg>
-          </q-btn>
-
-          <q-btn flat square color="primary" class="border-button rounded-borders">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="19"
-              height="20"
-              viewBox="0 0 19 20"
-              fill="none"
-            >
-              <path
-                d="M8 13.5C8.8 13.5 9.57 13.43 10.31 13.32L13.22 10.41C11.89 11.09 10 11.5 8 11.5C5.58 11.5 3.3 10.9 2 9.95V7.14C3.47 7.97 5.61 8.5 8 8.5C10.39 8.5 12.53 7.97 14 7.14V9.63L15.39 8.24C15.57 8.06 15.78 7.92 16 7.8V4.5C16 2.29 12.42 0.5 8 0.5C3.58 0.5 0 2.29 0 4.5V14.5C0 16.54 3.06 18.22 7 18.47V16.63L7.17 16.46C3.84 16.26 2 14.96 2 14.5V12.27C3.61 13.05 5.72 13.5 8 13.5ZM8 2.5C11.87 2.5 14 4 14 4.5C14 5 11.87 6.5 8 6.5C4.13 6.5 2 5 2 4.5C2 4 4.13 2.5 8 2.5ZM15.13 11.33L17.17 13.37L11.04 19.5H9V17.46L15.13 11.33ZM18.85 11.69L17.87 12.67L15.83 10.63L16.81 9.65C17 9.45 17.33 9.45 17.53 9.65L18.85 10.97C19.05 11.17 19.05 11.5 18.85 11.69Z"
-                fill="#008444"
-              />
-            </svg>
-          </q-btn>
-
-          <q-btn
-            flat
-            square
-            color="primary"
-            class="border-button rounded-borders"
-            style="padding-top: 11px; padding-bottom: 11px"
+    <div class="col-grow">
+      <div class="row q-gutter-xs">
+        <!-- create new reservation  -->
+        <q-btn flat square color="primary" class="border-button rounded-borders">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="19"
+            height="20"
+            viewBox="0 0 19 20"
+            fill="none"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="19"
-              height="18"
-              viewBox="0 0 19 18"
-              fill="none"
-            >
-              <path
-                d="M16 10.09V4C16 1.79 12.42 0 8 0C3.58 0 0 1.79 0 4V14C0 16.21 3.59 18 8 18C8.46 18 8.9 18 9.33 17.94C9.1129 17.3162 9.00137 16.6605 9 16V15.95C8.68 16 8.35 16 8 16C4.13 16 2 14.5 2 14V11.77C3.61 12.55 5.72 13 8 13C8.65 13 9.27 12.96 9.88 12.89C10.4127 12.0085 11.1638 11.2794 12.0607 10.7731C12.9577 10.2668 13.9701 10.0005 15 10C15.34 10 15.67 10.04 16 10.09ZM14 9.45C12.7 10.4 10.42 11 8 11C5.58 11 3.3 10.4 2 9.45V6.64C3.47 7.47 5.61 8 8 8C10.39 8 12.53 7.47 14 6.64V9.45ZM8 6C4.13 6 2 4.5 2 4C2 3.5 4.13 2 8 2C11.87 2 14 3.5 14 4C14 4.5 11.87 6 8 6ZM19 15V17H11V15H19Z"
-                fill="#008444"
-              />
-            </svg>
-          </q-btn>
-        </div>
+            <path
+              d="M16 10.09V4C16 1.79 12.42 0 8 0C3.58 0 0 1.79 0 4V14C0 16.21 3.59 18 8 18C8.46 18 8.9 18 9.33 17.94C9.1129 17.3162 9.00137 16.6605 9 16V15.95C8.68 16 8.35 16 8 16C4.13 16 2 14.5 2 14V11.77C3.61 12.55 5.72 13 8 13C8.65 13 9.27 12.96 9.88 12.89C10.4127 12.0085 11.1638 11.2794 12.0607 10.7731C12.9577 10.2668 13.9701 10.0005 15 10C15.34 10 15.67 10.04 16 10.09ZM14 9.45C12.7 10.4 10.42 11 8 11C5.58 11 3.3 10.4 2 9.45V6.64C3.47 7.47 5.61 8 8 8C10.39 8 12.53 7.47 14 6.64V9.45ZM8 6C4.13 6 2 4.5 2 4C2 3.5 4.13 2 8 2C11.87 2 14 3.5 14 4C14 4.5 11.87 6 8 6ZM19 15V17H16V20H14V17H11V15H14V12H16V15H19Z"
+              fill="#008444"
+            />
+          </svg>
+        </q-btn>
 
-        <div style="display: flex; gap: 5px">
-          <q-btn
-            flat
-            square
-            color="primary"
-            icon="o_add_home"
-            class="border-button rounded-borders"
-            style="
-              padding-bottom: 9px;
-              padding-top: 7px;
-              padding-right: 6px;
-              padding-left: 6px;
-              align-items: center;
-              justify-content: center;
-            "
-          />
+        <!-- edit reservation  -->
+        <q-btn flat square color="primary" class="border-button rounded-borders">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="19"
+            height="20"
+            viewBox="0 0 19 20"
+            fill="none"
+          >
+            <path
+              d="M8 13.5C8.8 13.5 9.57 13.43 10.31 13.32L13.22 10.41C11.89 11.09 10 11.5 8 11.5C5.58 11.5 3.3 10.9 2 9.95V7.14C3.47 7.97 5.61 8.5 8 8.5C10.39 8.5 12.53 7.97 14 7.14V9.63L15.39 8.24C15.57 8.06 15.78 7.92 16 7.8V4.5C16 2.29 12.42 0.5 8 0.5C3.58 0.5 0 2.29 0 4.5V14.5C0 16.54 3.06 18.22 7 18.47V16.63L7.17 16.46C3.84 16.26 2 14.96 2 14.5V12.27C3.61 13.05 5.72 13.5 8 13.5ZM8 2.5C11.87 2.5 14 4 14 4.5C14 5 11.87 6.5 8 6.5C4.13 6.5 2 5 2 4.5C2 4 4.13 2.5 8 2.5ZM15.13 11.33L17.17 13.37L11.04 19.5H9V17.46L15.13 11.33ZM18.85 11.69L17.87 12.67L15.83 10.63L16.81 9.65C17 9.45 17.33 9.45 17.53 9.65L18.85 10.97C19.05 11.17 19.05 11.5 18.85 11.69Z"
+              fill="#008444"
+            />
+          </svg>
+        </q-btn>
 
-          <q-btn
-            flat
-            square
-            color="primary"
-            icon="o_payment"
-            class="border-button rounded-borders"
-            style="
-              padding-right: 4px;
-              padding-left: 4px;
-              align-items: center;
-              justify-content: center;
-            "
-            @click="icon = true"
-          />
-        </div>
+        <!-- remove reservation  -->
+        <q-btn flat square color="primary" class="border-button rounded-borders">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="19"
+            height="18"
+            viewBox="0 0 19 18"
+            fill="none"
+          >
+            <path
+              d="M16 10.09V4C16 1.79 12.42 0 8 0C3.58 0 0 1.79 0 4V14C0 16.21 3.59 18 8 18C8.46 18 8.9 18 9.33 17.94C9.1129 17.3162 9.00137 16.6605 9 16V15.95C8.68 16 8.35 16 8 16C4.13 16 2 14.5 2 14V11.77C3.61 12.55 5.72 13 8 13C8.65 13 9.27 12.96 9.88 12.89C10.4127 12.0085 11.1638 11.2794 12.0607 10.7731C12.9577 10.2668 13.9701 10.0005 15 10C15.34 10 15.67 10.04 16 10.09ZM14 9.45C12.7 10.4 10.42 11 8 11C5.58 11 3.3 10.4 2 9.45V6.64C3.47 7.47 5.61 8 8 8C10.39 8 12.53 7.47 14 6.64V9.45ZM8 6C4.13 6 2 4.5 2 4C2 3.5 4.13 2 8 2C11.87 2 14 3.5 14 4C14 4.5 11.87 6 8 6ZM19 15V17H11V15H19Z"
+              fill="#008444"
+            />
+          </svg>
+        </q-btn>
 
-        <q-dialog v-model="icon">
+        <q-space />
+
+        <q-btn
+          flat
+          square
+          color="primary"
+          icon="o_add_home"
+          class="border-button rounded-borders"
+          style="padding-top: 0; padding-bottom: 0"
+        />
+
+        <!-- show modal to create card's credential: KTP, SIM, address  -->
+        <q-btn
+          flat
+          square
+          color="primary"
+          icon="o_badge"
+          class="border-button rounded-borders"
+          style="padding-top: 0; padding-bottom: 0"
+          @click="dialogpayment = true"
+        />
+
+        <q-dialog v-model="dialogpayment">
           <q-card>
             <q-card-section class="items-center q-pb-none">
               <div class="row items-center">
@@ -179,9 +163,10 @@
         outlined
         v-model="text"
         label="Guest Name/ No Handphone"
-        class="q-mt-sm full-width"
+        class="q-mt-sm width-full"
       />
-      <div style="display: flex; gap: 8px; align-items: center" class="q-mt-sm">
+
+      <div style="gap: 8px" class="row no-wrap items-center q-mt-sm">
         <div class="bg-primary-tint text-primary text-bold q-px-sm rounded-borders">#ResNo</div>
 
         <q-select
@@ -195,7 +180,7 @@
         />
       </div>
 
-      <div style="display: flex; gap: 8px" class="q-mt-sm">
+      <div style="gap: 8px" class="row no-wrap q-mt-sm">
         <q-select
           outlined
           dense
@@ -245,7 +230,7 @@
         </q-select>
       </div>
 
-      <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1.5px" />
+      <q-separator class="q-my-sm bg-grey" size="1px" />
 
       <div class="text-bold q-mt-sm">Arrival &nbsp;&nbsp;&nbsp;Depart &nbsp;&nbsp;&nbsp;Night</div>
 
@@ -261,6 +246,7 @@
       >
         <q-date v-model="datePicker" range />
       </q-btn-dropdown>
+
       <div class="text-bold q-mt-sm">Adult &nbsp;&nbsp;&nbsp;Child &nbsp;&nbsp;&nbsp;Baby</div>
 
       <q-btn-dropdown
@@ -366,26 +352,26 @@
       </q-btn-dropdown>
     </div>
 
-    <div class="q-pr-sm full-width" style="max-width: 350px">
-      <div style="display: flex; align-items: center; justify-content: space-between">
-        <div style="display: flex; align-items: center">
-          <div class="text-bold col-grow q-pr-xs">Res Status:</div>
-          <q-select
-            outlined
-            dense
-            v-model="resstatusmodel"
-            :options="resstatus"
-            label="Status"
-            dropdown-icon="expand_more"
-            style="width: 130px"
-          />
-        </div>
+    <div class="col-grow">
+      <div class="row no-wrap items-center" style="gap: 8px">
+        <div class="text-bold">Res Status:</div>
+        <q-select
+          outlined
+          dense
+          v-model="resstatusmodel"
+          :options="resstatus"
+          label="Status"
+          dropdown-icon="expand_more"
+          style="width: 150px"
+        />
+
+        <q-space />
 
         <div style="display: flex">
           <q-btn
             flat
-            v-model="isRbSelected"
             square
+            v-model="isRbSelected"
             dense
             class="q-px-sm"
             :class="{ 'background-primary': isRbSelected }"
@@ -417,12 +403,17 @@
         </div>
       </div>
 
-      <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1.5px" />
+      <q-separator class="q-my-sm bg-grey" size="1px" />
 
-      <q-expansion-item label="Room Rate: Rp 0.00" class="padding-expansion">
-        <q-card class="full-width">
+      <q-expansion-item
+        label="Room Rate: Rp 0.00"
+        class="padding-expansion q-pa-none"
+        dense
+        style="font-weight: bold"
+      >
+        <q-card>
           <q-table
-            style="height: 145px"
+            style="height: 140px"
             dense
             :rows-per-page-options="[0]"
             virtual-scroll
@@ -435,63 +426,59 @@
             v-model:selected.sync="selected"
           />
         </q-card>
+        <q-btn
+          unelevated
+          dense
+          to="/fo/guest-invoice"
+          class="q-mt-sm text-capitalize q-px-sm"
+          color="primary"
+          label="Invoice"
+        />
       </q-expansion-item>
 
-      <q-btn
-        flat
-        square
-        dense
-        class="rounded-borders text-capitalize q-mt-sm q-mx-xs"
-        style="background-color: #069550; color: white; padding: 0 15px"
-        @click="icon = true"
-      >
-        Invoice
-      </q-btn>
-
-      <div style="display: flex; justify-content: space-between" class="q-mt-sm q-mx-sm">
-        <div class="text-bold">Balance:</div>
-        <div>Rp 0.00</div>
+      <div style="display: flex; justify-content: space-between" class="q-mt-sm">
+        <p class="text-bold q-ma-none">Balance:</p>
+        <p class="text-bold q-ma-none">Rp 0.00</p>
       </div>
 
-      <q-separator class="q-mt-sm" style="background: rgba(0, 0, 0, 0.5)" size="1px" />
+      <q-separator class="q-mt-sm bg-grey" size="1px" />
     </div>
 
     <div class="col-grow">
-      <q-expansion-item label="Reservation Remarks" class="padding-expansion">
+      <q-expansion-item
+        dense
+        style="font-weight: bold"
+        label="Reservation Remarks"
+        class="padding-expansion"
+      >
         <q-card>
-          <q-input v-model="textarea" label="Note..." filled type="textarea" />
+          <q-input
+            v-model="textarea"
+            label="Note..."
+            dense
+            outlined
+            style="max-height: 200px"
+            type="textarea"
+          />
         </q-card>
       </q-expansion-item>
 
-      <div style="display: flex; align-items: center; gap: 10px" class="q-mt-sm">
+      <div style="gap: 8px" class="q-mt-sm row no-wrap items-center">
         <q-btn
+          label="Reservation"
           outline
           color="primary"
-          square
           dense
-          class="rounded-borders text-capitalize full-width"
-          style="background-color: #069550; color: white"
-        >
-          Reservation
-        </q-btn>
+          class="text-capitalize full-width"
+        />
         <q-btn
-          flat
-          square
+          label="Check-In"
+          unelevated
+          color="primary"
           dense
-          class="rounded-borders text-capitalize full-width"
-          style="background-color: #069550; color: white"
-        >
-          Check-In
-        </q-btn>
-        <q-btn
-          outline
-          square
-          color="black"
-          dense
-          class="rounded-borders text-capitalize full-width text-black flex-1"
-        >
-          Check-Out
-        </q-btn>
+          class="text-capitalize full-width"
+        />
+        <q-btn label="Check-Out" outline color="grey" dense class="text-capitalize full-width" />
       </div>
     </div>
   </div>
@@ -616,7 +603,7 @@ export default defineComponent({
       isSimSelected,
       toggleKtpSelected,
       toggleSimSelected,
-      icon: ref(false),
+      dialogpayment: ref(false),
       columns,
       rows,
       nameidcard: ref(''),

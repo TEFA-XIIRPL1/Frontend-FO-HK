@@ -9,7 +9,7 @@
         <p class="q-mb-none text-bold text-subtitle1">{{ currentTime }}</p>
         <q-space />
 
-        <div class="q-gutter-sm row items-center no-wrap">
+        <div class="q-gutter-sm col-grow row justify-end items-center no-wrap">
           <MessengerFloat />
           <ProfileFloat />
         </div>
@@ -20,7 +20,7 @@
       <SideBar />
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container style="height: 100vh; overflow-y: hidden; overflow-x: auto">
       <Transition name="slide-fade" appear mode="out-in">
         <router-view :key="$route.fullPath" />
       </Transition>
