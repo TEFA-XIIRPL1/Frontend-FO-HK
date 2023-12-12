@@ -12,7 +12,8 @@ const frontoffice_routes = [
     component: () => import('pages/FO/Invoice.vue'),
     meta: {
       title: 'Arrival Guest List - Invoice',
-      main_route: false
+      main_route: false,
+      protected: true
     }
   },
   {
@@ -20,7 +21,8 @@ const frontoffice_routes = [
     component: () => import('pages/FO/RoomAvailability.vue'),
     meta: {
       title: 'Room Availability',
-      main_route: true
+      main_route: true,
+      protected: true
     }
   },
   {
@@ -28,7 +30,8 @@ const frontoffice_routes = [
     component: () => import('pages/FO/RoomPlan.vue'),
     meta: {
       title: 'Room Plan',
-      main_route: true
+      main_route: true,
+      protected: true
     }
   },
   {
@@ -36,7 +39,8 @@ const frontoffice_routes = [
     component: () => import('pages/FO/Reports.vue'),
     meta: {
       title: 'Reports',
-      main_route: true
+      main_route: true,
+      protected: true
     }
   }
 ]

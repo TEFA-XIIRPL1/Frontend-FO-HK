@@ -4,18 +4,23 @@ import { housekeeping_routes, hkreports_routes } from './housekeeping.router'
 const routes = [
   {
     path: '/',
-    component: () => import('pages/IndexPage.vue')
+    component: () => import('pages/IndexPage.vue'),
+    meta: {
+      title: 'Login',
+      protected: true
+    }
   },
 
   {
-    path: '/guest',
+    path: '/auth',
     component: () => import('layouts/BlankLayout.vue'),
     children: [
       {
-        path: '/guest/login',
+        path: '/auth/login',
         component: () => import('pages/Login.vue'),
         meta: {
-          title: 'Login'
+          title: 'Login',
+          protected: false
         }
       }
     ]

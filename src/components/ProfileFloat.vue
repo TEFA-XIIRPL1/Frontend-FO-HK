@@ -1,23 +1,23 @@
 <template>
   <q-btn round dense flat>
     <q-avatar size="26px">
-      <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+      <img :src="user.picture" />
     </q-avatar>
     <q-menu fit anchor="bottom left" self="top left" style="max-width: 320px">
       <q-item>
         <q-item-section>
           <q-img
-            src="~/assets/img/curaweda_logo.png"
+            :src="user.picture"
             class="q-my-md q-mx-auto"
-            style="width: 100px"
+            style="width: 100px; border-radius: 100px"
           />
-          <h5 class="q-mt-none q-mb-md q-px-md">Halo, Curaweda!</h5>
+          <h5 class="q-mt-none q-mb-md text-center">Halo, {{ user.username }}</h5>
         </q-item-section>
       </q-item>
 
       <q-separator />
 
-      <q-item clickable class="text-negative">
+      <q-item clickable class="text-negative" @click="logout" :disable="logout_loading">
         <q-item-section avatar>
           <q-icon name="o_logout" />
         </q-item-section>
@@ -34,6 +34,31 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ProfileFloat'
+  name: 'ProfileFloat',
+
+  data() {
+    return {
+      api: new this.$Api('frontoffice'),
+      user: this.$AuthStore.getUser(),
+      logout_loading: false
+    }
+  },
+  methods: {
+    logout() {
+      this.logout_loading = true
+
+      this.api.useToken(false).post('auth/user/logout', {}, ({ status }) => {
+        if (status == 200) {
+          this.$Config.logout()
+          this.$AuthStore.clearData()
+          this.$Helper.showNotif('Logout Success', '', 'positive')
+
+          this.$router.go('/auth/login')
+        }
+
+        this.logout_loading = false
+      })
+    }
+  }
 })
 </script>
