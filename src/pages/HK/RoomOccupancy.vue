@@ -96,9 +96,9 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import HKCard from 'src/components/HK/HKCard.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
 import HKChart from 'src/components/charts/HKChart.vue'
-import HKTable from 'src/components/HK/HKTable.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
 
 const roomData = [
   {

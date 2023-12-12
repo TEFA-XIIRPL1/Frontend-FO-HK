@@ -373,8 +373,8 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import HKCard from 'src/components/HK/HKCard.vue'
-import HKDateInput from 'src/components/HK/HKDateInput.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKDateInput from 'src/components/HK/Form/HKDateInput.vue'
 
 export default defineComponent({
   name: 'CleanDirtyPage',
@@ -498,19 +498,19 @@ const rows = [
 }
 
 @media (max-width: 949px) {
-      .q-ml-auto {
-        margin-right: auto !important;
-      }
-    }
+  .q-ml-auto {
+    margin-right: auto !important;
+  }
+}
 
-    @media (max-width: 687px) {
-      .q-ml-auto {
-        margin-left: 5px !important;
-      }
-    }
-    @media (max-width: 391px) {
-      .sorting {
-        flex-direction: column;
-      }
-    }
+@media (max-width: 687px) {
+  .q-ml-auto {
+    margin-left: 5px !important;
+  }
+}
+@media (max-width: 391px) {
+  .sorting {
+    flex-direction: column;
+  }
+}
 </style>

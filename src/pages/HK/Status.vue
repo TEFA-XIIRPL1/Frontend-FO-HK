@@ -65,7 +65,7 @@
                   :columns="dataColumns"
                   row-key="name"
                   square
-                  class="q-pa-md" 
+                  class="q-pa-md"
                   :table-header-style="{
                     backgroundColor: '#069550',
                     color: '#ffffff',
@@ -173,9 +173,10 @@
                     <p class="text-weight-bold text-body1 q-mt-sm">Room No</p>
                     <div
                       class="q-mx-md text-weight-bold flex items-center"
-                      style="width: 60px; height: 30px; background-color:white;"
-                  
-                    >t</div>
+                      style="width: 60px; height: 30px; background-color: white"
+                    >
+                      t
+                    </div>
                   </div>
                 </div>
               </div>
@@ -191,8 +192,8 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import HKCard from 'src/components/HKCard.vue'
-import HKTable from 'src/components/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
 
 export default defineComponent({
   name: 'StatusPage',

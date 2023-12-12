@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import HKCard from 'src/components/HK/HKCard.vue'
-import HKTable from 'src/components/HK/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
 import FormDate from 'src/components/general/Date.vue'
 import { defineComponent, ref } from 'vue'
 
@@ -73,7 +73,7 @@ const columns = [
   {
     name: 'res no',
     label: 'ResNo',
-    field: 'resno',
+    field: 'resNo',
     align: 'left'
   },
   {
@@ -93,7 +93,7 @@ const rows = [
     rmNo: '101',
     moveTo: '110',
     reason: 'Kamar ada serangga',
-    resNp: '18086',
+    resNo: '18086',
     guestName: 'RONO RUSTAN'
   },
   {
@@ -104,7 +104,7 @@ const rows = [
     rmNo: '101',
     moveTo: '110',
     reason: 'Kamar ada serangga',
-    resNp: '18086',
+    resNo: '18086',
     guestName: 'RONO RUSTAN'
   },
   {
@@ -115,7 +115,7 @@ const rows = [
     rmNo: '101',
     moveTo: '110',
     reason: 'Kamar ada serangga',
-    resNp: '18086',
+    resNo: '18086',
     guestName: 'RONO RUSTAN'
   },
   {
@@ -126,7 +126,7 @@ const rows = [
     rmNo: '101',
     moveTo: '110',
     reason: 'Kamar ada serangga',
-    resNp: '18086',
+    resNo: '18086',
     guestName: 'RONO RUSTAN'
   },
   {
@@ -137,7 +137,7 @@ const rows = [
     rmNo: '101',
     moveTo: '110',
     reason: 'Kamar ada serangga',
-    resNp: '18086',
+    resNo: '18086',
     guestName: 'RONO RUSTAN'
   }
 ]

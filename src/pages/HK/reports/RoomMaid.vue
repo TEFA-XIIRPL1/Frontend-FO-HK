@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import HKCard from 'src/components/HK/HKCard.vue'
-import HKTable from 'src/components/HK/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
 import { defineComponent, ref } from 'vue'
 
 const columns = [
