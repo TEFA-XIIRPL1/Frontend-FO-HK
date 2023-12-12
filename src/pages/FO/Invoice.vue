@@ -110,22 +110,11 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import FOMenubar from 'src/components/FOMenubar.vue'
 import MultiPane from 'src/layouts/MultiPane.vue'
 import InvoiceForm from './fragments/InvoiceForm.vue'
 import { allObjectsInArray } from 'src/utils/datatype'
-const searchInput = ref('')
-
-const datePicker = ref({ from: '', to: '' })
-
-const radioInput = ref(null)
-const radioOptions = [
-  { label: 'Reservation', value: 'reservation' },
-  { label: 'In-House Guest', value: 'in-house-guest' },
-  { label: 'Arrival-Today', value: 'arrival-today' },
-  { label: 'Depart-Today', value: 'depart-today' }
-]
 
 const columns = [
   { name: 'Art', label: 'Art', align: 'left', field: 'Art' },
@@ -287,10 +276,6 @@ export default defineComponent({
   data() {
     return {
       filterCols,
-      searchInput,
-      datePicker,
-      radioInput,
-      radioOptions,
       rows,
       columns,
       allObjectsInArray
