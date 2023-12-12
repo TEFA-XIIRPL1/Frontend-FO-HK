@@ -116,3 +116,21 @@ export const hkreports_routes = [
     }
   }
 ]
+
+export const hkroomboy_routes = [
+  {
+    path: '/hk/rb/dashbboard',
+    component: () => import('pages/HK/IMPPS/RoomBoy/Dashboard.vue')
+  },
+  {
+    path: '/hk/rb/lostfound',
+    component: () => import('pages/HK/IMPPS/RoomBoy/LostFound.vue')
+  }
+]
+
+export const hksupervisor_routes = [
+  {
+    path: '/hk/spv/dashbboard',
+    component: () => import('pages/HK/IMPPS/Supervisor/Dashboard.vue')
+  }
+]
