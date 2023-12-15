@@ -44,7 +44,7 @@
           color="primary"
           dropdown-icon="o_expand_more"
         >
-          <q-option-group :options="radioOptions" type="radio" v-model="radioInput" />
+          <q-option-group :options="filterDisplayOptions" type="radio" v-model="filterDisplay" />
         </q-btn-dropdown>
       </template>
       <template #right>
@@ -58,7 +58,15 @@
     <MultiPane>
       <template #upper>
         <div class="my-table">
-          <q-table class="no-shadow" :rows="rows" :columns="columns" row-key="name">
+          <q-table
+            class="no-shadow"
+            v-model:pagination="pagination"
+            @request="onPaginationChange"
+            :rows="data"
+            :loading="loading"
+            :columns="columns"
+            row-key="name"
+          >
             <template v-slot:header="props">
               <q-tr class="table-head" :props="props">
                 <q-th
@@ -67,18 +75,18 @@
                   style="padding-top: 0px; padding-bottom: 0px"
                 >
                   <q-select
-                    v-if="filterCols.hasOwnProperty(col.name)"
+                    v-if="filterColumns.hasOwnProperty(col.name)"
                     clearable
                     borderless
                     dark
                     label-color="white"
                     style="min-width: 90px"
-                    v-model="filterCols[col.name].data"
-                    :options="filterCols[col.name].options"
+                    v-model="filterColumns[col.name].data"
+                    :options="filterColumns[col.name].options"
                     :label="col.label"
                   >
                     <template
-                      v-if="allObjectsInArray(filterCols[col.name].options)"
+                      v-if="allObjectsInArray(filterColumns[col.name].options)"
                       v-slot:option="scope"
                     >
                       <q-item v-bind="scope.itemProps">
@@ -102,9 +110,11 @@
             </template>
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td v-for="(cell, i) in props.row" :key="i" :style="cell.style">
-                  {{ cell.data }}
-                </q-td>
+                <template v-for="(cell, key, i) in props.row" :key="i">
+                  <q-td v-if="!['ResRoomNo'].includes(key)" :style="cell.style">
+                    {{ cell.data }}
+                  </q-td>
+                </template>
                 <q-td key="" :props="props" style="width: 10px">
                   <q-btn flat rounded size="13px" style="color: #008444"
                     ><svg
@@ -151,283 +161,197 @@
 import FOMenubar from 'src/components/FOMenubar.vue'
 import MultiPane from 'src/layouts/MultiPane.vue'
 import GuestForm from 'src/pages/FO/fragments/GuestForm.vue'
+import { formatDate } from 'src/utils/time'
 import { defineComponent, ref } from 'vue'
 import { allObjectsInArray } from 'src/utils/datatype'
-
-const searchInput = ref('')
-
-const datePicker = ref({ from: '', to: '' })
-
-const radioInput = ref(null)
-const radioOptions = [
-  { label: 'Reservation', value: 'reservation' },
-  { label: 'In-House Guest', value: 'in-house-guest' },
-  { label: 'Arrival-Today', value: 'arrival-today' },
-  { label: 'Depart-Today', value: 'depart-today' }
-]
-
-const columns = [
-  { name: 'ResNo', label: 'ResNo', align: 'left', field: 'ResNo' },
-  { name: 'ResResource', label: 'ResResource', align: 'left', field: 'ResResource' },
-  { name: 'RmNo', label: 'RmNo', align: 'left', field: 'RmNo' },
-  { name: 'RType', label: 'RType', align: 'left', field: 'RType' },
-  { name: 'BType', label: 'BType', align: 'left', field: 'BType' },
-  { name: 'GuestName', label: 'GuestName', align: 'left', field: 'GuestName' },
-  { name: 'Arr', label: 'Arr', field: 'Arr', align: 'left' },
-  { name: 'Arrival', label: 'Arrival', align: 'left', field: 'Arrival' },
-  { name: 'Depart', label: 'Depart', align: 'left', field: 'Depart' },
-  { name: 'Night', label: 'Night', align: 'left', field: 'Night' },
-  { name: 'RoomBoy', label: 'RoomBoy', align: 'left', field: 'RoomBoy' },
-  { name: 'RoomRate', label: 'RoomRate', align: 'left', field: 'RoomRate' },
-  { name: 'CreatedDate', label: 'CreatedDate', align: 'left', field: 'CreatedDate' },
-  { name: '', label: '', align: 'center', field: '' }
-]
-
-const filterCols = {
-  ResNo: {
-    data: '',
-    options: ['Newest', 'Oldest']
-  },
-  ResResource: {
-    data: '',
-    options: ['Whatsapp', 'Walk-In']
-  },
-  RmNo: {
-    data: '',
-    options: ['101-110', '110-101', 'Guaranted', '6 PM', 'Tentative']
-  },
-  RType: {
-    data: '',
-    options: ['DLX', 'STD', 'FML']
-  },
-  BType: {
-    data: '',
-    options: [
-      {
-        icons: ['o_king_bed'],
-        label: 'King bed',
-        value: 'King bed'
-      },
-      {
-        icons: ['o_single_bed', 'o_single_bed'],
-        label: 'Twin bed',
-        value: 'Twin bed'
-      },
-      {
-        icons: ['o_single_bed'],
-        label: 'Single bed',
-        value: 'Single bed'
-      }
-    ]
-  },
-  GuestName: {
-    data: '',
-    options: ['A-Z', 'Z-A']
-  },
-  Arr: {
-    data: '',
-    options: ['RB', 'RO']
-  },
-  Arrival: {
-    data: '',
-    options: ['Newest', 'Oldest']
-  },
-  Depart: {
-    data: '',
-    options: ['Newest', 'Oldest']
-  },
-  Night: {
-    data: '',
-    options: ['1', '>1']
-  },
-  RoomBoy: {
-    data: '',
-    options: ['ILYAS', 'RONI', 'YUTA', 'HERTIAMAN']
-  },
-  RoomRate: {
-    data: '',
-    options: ['High Price', 'Low Price']
-  },
-  CreatedDate: {
-    data: '',
-    options: ['Newest', 'Oldest']
-  }
-}
-
-const rows = [
-  {
-    ResNo: { data: '188086', style: {} },
-    ResResource: { data: 'Whatsapp', style: {} },
-    RmNo: { data: '101', style: { backgroundColor: '#16a75c' } },
-    RType: { data: 'DLX', style: {} },
-    BType: { data: 'K', style: {} },
-    GuestName: { data: 'RONO RUSTAN', style: {} },
-    Arr: { data: 'RB', style: {} },
-    Arrival: { data: '12/02/23', style: {} },
-    Depart: { data: '13/02/23', style: {} },
-    Night: { data: '1', style: {} },
-    RoomBoy: { data: 'ILYAS', style: {} },
-    RoomRate: { data: 'Rp 541,027.00', style: {} },
-    CreatedDate: { data: '12/02/23', style: {} }
-  },
-  {
-    ResNo: { data: '188085', style: {} },
-    ResResource: { data: 'Walk-In', style: {} },
-    RmNo: { data: '102', style: { backgroundColor: 'yellow' } },
-    RType: { data: 'DLX', style: {} },
-    BType: { data: 'T', style: {} },
-    GuestName: { data: 'DZAKIYA', style: {} },
-    Arr: { data: 'RO', style: {} },
-    Arrival: { data: '12/02/23', style: {} },
-    Depart: { data: '13/02/23', style: {} },
-    Night: { data: '1', style: {} },
-    RoomBoy: { data: 'RONI', style: {} },
-    RoomRate: { data: 'Rp 541,027.00', style: {} },
-    CreatedDate: { data: '12/02/23', style: {} }
-  },
-  {
-    ResNo: { data: '188084', style: {} },
-    ResResource: { data: 'Whatsapp', style: {} },
-    RmNo: { data: '103', style: { backgroundColor: 'red' } },
-    RType: { data: 'STD', style: {} },
-    BType: { data: 'K', style: {} },
-    GuestName: { data: 'FACHRI', style: {} },
-    Arr: { data: 'RB', style: {} },
-    Arrival: { data: '12/02/23', style: {} },
-    Depart: { data: '13/02/23', style: {} },
-    Night: { data: '1', style: {} },
-    RoomBoy: { data: 'YUTA', style: {} },
-    RoomRate: { data: 'Rp 541,027.00', style: {} },
-    CreatedDate: { data: '12/02/23', style: {} }
-  },
-  {
-    ResNo: { data: '188083', style: {} },
-    ResResource: { data: 'Walk-In', style: {} },
-    RmNo: { data: '102', style: { backgroundColor: '' } },
-    RType: { data: 'STD', style: {} },
-    BType: { data: 'T', style: {} },
-    GuestName: { data: 'BENI', style: {} },
-    Arr: { data: 'RB', style: {} },
-    Arrival: { data: '12/02/23', style: {} },
-    Depart: { data: '13/02/23', style: {} },
-    Night: { data: '1', style: {} },
-    RoomBoy: { data: 'HERTIAMAN', style: {} },
-    RoomRate: { data: 'Rp 541,027.00', style: {} },
-    CreatedDate: { data: '12/02/23', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  },
-  {
-    ResNo: { data: '', style: {} },
-    ResResource: { data: '', style: {} },
-    RmNo: { data: '', style: { backgroundColor: '' } },
-    RType: { data: '', style: {} },
-    BType: { data: '', style: {} },
-    GuestName: { data: '', style: {} },
-    Arr: { data: '', style: {} },
-    Arrival: { data: '', style: {} },
-    Depart: { data: '', style: {} },
-    Night: { data: '', style: {} },
-    RoomBoy: { data: '', style: {} },
-    RoomRate: { data: '', style: {} },
-    CreatedDate: { data: '', style: {} }
-  }
-]
 
 export default defineComponent({
   name: 'GuestList',
   components: { FOMenubar, MultiPane, GuestForm },
-  data() {
+  setup() {
     return {
-      filterCols,
-      searchInput,
-      datePicker,
-      radioInput,
-      radioOptions,
-      rows,
-      columns,
-      allObjectsInArray
+      allObjectsInArray,
+      loading: ref(false),
+      searchInput: ref(''),
+      datePicker: ref({ from: '', to: '' }),
+      filterDisplay: ref(null),
+      filterDisplayOptions: [
+        { label: 'All', value: null },
+        { label: 'Reservation', value: 'reservation' },
+        { label: 'In-House Guest', value: 'inhouse' },
+        { label: 'Arrival-Today', value: 'arrival' },
+        { label: 'Depart-Today', value: 'departure' }
+      ],
+      columns: [
+        { name: 'ResNo', label: 'ResNo', align: 'left', field: 'ResNo' },
+        { name: 'ResResource', label: 'ResResource', align: 'left', field: 'ResResource' },
+        { name: 'RmNo', label: 'RmNo', align: 'left', field: 'RmNo' },
+        { name: 'RType', label: 'RType', align: 'left', field: 'RType' },
+        { name: 'BType', label: 'BType', align: 'left', field: 'BType' },
+        { name: 'GuestName', label: 'GuestName', align: 'left', field: 'GuestName' },
+        { name: 'Arr', label: 'Arr', field: 'Arr', align: 'left' },
+        { name: 'Arrival', label: 'Arrival', align: 'left', field: 'Arrival' },
+        { name: 'Depart', label: 'Depart', align: 'left', field: 'Depart' },
+        { name: 'Night', label: 'Night', align: 'left', field: 'Night' },
+        { name: 'RoomBoy', label: 'RoomBoy', align: 'left', field: 'RoomBoy' },
+        { name: 'RoomRate', label: 'RoomRate', align: 'left', field: 'RoomRate' },
+        { name: 'CreatedDate', label: 'CreatedDate', align: 'left', field: 'CreatedDate' },
+        { name: '', label: '', align: 'center', field: '' }
+      ]
     }
   },
+  data() {
+    return {
+      filterColumns: {
+        ResNo: {
+          data: '',
+          options: ['Newest', 'Oldest']
+        },
+        ResResource: {
+          data: '',
+          options: ['Whatsapp', 'Walk-In']
+        },
+        RmNo: {
+          data: '',
+          options: ['101-110', '110-101', 'Guaranted', '6 PM', 'Tentative']
+        },
+        RType: {
+          data: '',
+          options: ['DLX', 'STD', 'FML']
+        },
+        BType: {
+          data: '',
+          options: [
+            {
+              icons: ['o_king_bed'],
+              label: 'King bed',
+              value: 'King bed'
+            },
+            {
+              icons: ['o_single_bed', 'o_single_bed'],
+              label: 'Twin bed',
+              value: 'Twin bed'
+            },
+            {
+              icons: ['o_single_bed'],
+              label: 'Single bed',
+              value: 'Single bed'
+            }
+          ]
+        },
+        GuestName: {
+          data: '',
+          options: ['A-Z', 'Z-A']
+        },
+        Arr: {
+          data: '',
+          options: ['RB', 'RO']
+        },
+        Arrival: {
+          data: '',
+          options: ['Newest', 'Oldest']
+        },
+        Depart: {
+          data: '',
+          options: ['Newest', 'Oldest']
+        },
+        Night: {
+          data: '',
+          options: ['1', '>1']
+        },
+        RoomBoy: {
+          data: '',
+          options: ['ILYAS', 'RONI', 'YUTA', 'HERTIAMAN']
+        },
+        RoomRate: {
+          data: '',
+          options: ['High Price', 'Low Price']
+        },
+        CreatedDate: {
+          data: '',
+          options: ['Newest', 'Oldest']
+        }
+      },
+      api: new this.$Api('frontoffice'),
+      pagination: {
+        page: 1,
+        rowsNumber: 0,
+        rowsPerPage: 20
+      },
+      data: []
+    }
+  },
+  mounted() {
+    this.fetchData()
+  },
   watch: {
-    filterCols: {
+    filterColumns: {
       handler(filters) {
         console.log(filters)
       },
       deep: true
+    },
+    filterDisplay: {
+      handler(option) {
+        this.fetchData()
+      }
+    }
+  },
+  methods: {
+    onPaginationChange(props) {
+      this.pagination = props.pagination
+      this.fetchData()
+    },
+    fetchData() {
+      this.loading = true
+
+      let url = `/page/arrival?page=${this.pagination.page}&perPage=${this.pagination.rowsPerPage}`
+
+      if (this.filterDisplay !== null) url += `&disOpt=${this.filterDisplay}`
+
+      this.api.get(url, ({ status, data }) => {
+        this.loading = false
+
+        if (status == 200) {
+          this.formatData(data.reservations)
+          this.pagination = {
+            page: data.meta?.currPage,
+            rowsNumber: data.meta?.total,
+            rowsPerPage: data.meta?.perPage
+          }
+        }
+      })
+    },
+    formatData(raw = []) {
+      const list = []
+
+      raw.forEach((rsrv) => {
+        rsrv.reservation.forEach((rr) => {
+          list.push({
+            ResNo: { data: rsrv.reservationId, style: {} },
+            ResRoomNo: { data: rr.id, style: {} },
+            ResResource: { data: rr.reservation.reserver.resourceName, style: {} },
+            RmNo: {
+              data: rr.room.id,
+              style: {
+                backgroundColor: rr.reservation.resvStatus.rowColor,
+                textColor: rr.reservation.resvStatus.textColor
+              }
+            },
+            RType: { data: rr.room.roomType, style: {} },
+            BType: { data: rr.room.bedSetup, style: {} },
+            GuestName: { data: rr.reservation.reserver.guest.name, style: {} },
+            Arr: { data: rr.arrangment.id, style: {} },
+            Arrival: { data: formatDate(rr.reservation.arrivalDate), style: {} },
+            Depart: { data: formatDate(rr.reservation.departureDate), style: {} },
+            Night: { data: rr.reservation.manyNight, style: {} },
+            RoomBoy: { data: '', style: {} },
+            RoomRate: { data: rr.arrangment.rate, style: {} },
+            CreatedDate: { data: formatDate(rr.reservation.created_at), style: {} }
+          })
+        })
+      })
+      this.data = list
     }
   }
 })
