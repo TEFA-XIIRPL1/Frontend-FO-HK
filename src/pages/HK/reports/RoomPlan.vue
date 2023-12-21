@@ -9,7 +9,7 @@
         align="left"
         style="width: 124px; height: fit-content; padding-inline: 8px; color: #757575"
       />
-      <div v-for="(status, index) in roomStatus" :key="index" class="column" style="flex: 1 1 0%">
+      <!-- <div v-for="(status, index) in roomStatus" :key="index" class="column" style="flex: 1 1 0%">
         <div v-if="index === 3" class="column full-height justify-between">
           <div
             class="flex items-center justify-center"
@@ -48,7 +48,7 @@
         >
           {{ statusItem.status }}
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- ROOMS -->
