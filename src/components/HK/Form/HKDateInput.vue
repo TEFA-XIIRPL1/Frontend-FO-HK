@@ -13,7 +13,7 @@
   </q-btn-dropdown>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -55,6 +55,7 @@ export default defineComponent({
 .date-btn {
   width: fit-content;
   padding: 0 4px 0px 8px;
+  color: #d9d9d9 !important;
 }
 .date-btn .q-btn__content {
   color: black;
