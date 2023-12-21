@@ -1,255 +1,441 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="q-gutter-md q-items-center">
-      <CardComponent v-for="datas in cardData" :key="datas.id" class="q-pa-md">
-        <h1 class="text-h6 text-black q-font-semibold">
-          {{ datas.name }}
-        </h1>
-        <q-table :rows="datas.dataName" :columns="cardColumns" row-key="id" class="q-mt-md">
-          <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td :props="props" auto-width>
-                {{ props.row.name }}
-              </q-td>
-              <q-td :props="props" align="center" auto-width>
-                <q-paragraph class="q-ma-none q-pa-xs q-font-semibold">
-                  {{ props.row.room }}
-                </q-paragraph>
-              </q-td>
-              <q-td :props="props" align="center" class="q-pa-md" auto-width>
-                <q-paragraph class="q-ma-none q-pa-xs q-font-semibold">
-                  {{ props.row.person }}
-                </q-paragraph>
-              </q-td>
-            </q-tr>
-          </template>
-        </q-table>
-      </CardComponent>
+  <q-page class="column q-px-lg q-py-md" style="row-gap: 24px">
+    <div class="flex" style="gap: 24px">
+      <HKCard card_style="flex: 1 1 0%; padding-inline: 24px;">
+        <span class="text-h6" style="font-weight: 600">Arrival</span>
+        <table class="full-width">
+          <tr>
+            <td></td>
+            <td align="center">Room</td>
+            <td align="center">Person</td>
+          </tr>
+          <tr v-for="(data, index) in arrivalData" :key="index">
+            <td style="padding: 4px">{{ data.label }}</td>
+            <td align="center" style="padding: 4px">
+              <q-card class="q-py-xs">
+                {{ data.room }}
+              </q-card>
+            </td>
+            <td align="center" style="padding: 4px">
+              <q-card class="q-py-xs">
+                {{ data.person }}
+              </q-card>
+            </td>
+          </tr>
+        </table>
+      </HKCard>
+      <HKCard card_style="flex: 1 1 0%; padding-inline: 24px;">
+        <span class="text-h6" style="font-weight: 600">Departure</span>
+        <table class="full-width">
+          <tr>
+            <td></td>
+            <td align="center">Room</td>
+            <td align="center">Person</td>
+          </tr>
+          <tr v-for="(data, index) in departureData" :key="index">
+            <td style="padding: 4px">{{ data.label }}</td>
+            <td align="center" style="padding: 4px">
+              <q-card class="q-py-xs">
+                {{ data.room }}
+              </q-card>
+            </td>
+            <td align="center" style="padding: 4px">
+              <q-card class="q-py-xs">
+                {{ data.person }}
+              </q-card>
+            </td>
+          </tr>
+        </table>
+      </HKCard>
     </div>
-    <div class="q-mt-md q-pa-sm">
-      <TableComponent :columns="dataColumns" :rows="dataRows" :hide-pagination="false" />
+
+    <!-- Table -->
+    <div class="full-width">
+      <!-- Filtering -->
+      <div class="flex q-mb-sm justify-between" style="gap: 8px">
+        <div class="flex" style="gap: 16px">
+          <div class="flex items-center" style="gap: 8px">
+            <span style="font-size: 16px; font-weight: 500">Sorting :</span>
+            <q-select
+              outlined
+              dense
+              v-model="sortingModel"
+              dropdown-icon="expand_more"
+              :options="sortingOptions"
+              style="width: 11rem"
+              class="input-border"
+            />
+          </div>
+
+          <q-btn
+            outline
+            dense
+            @click="guestHistoryModel = true"
+            style="width: 12rem; color: #d9d9d9; padding-inline: 16px"
+            align="left"
+            no-caps
+          >
+            <q-icon name="history" style="color: #616161; margin-right: 8px" />
+            <div style="color: #616161">Guest History</div>
+          </q-btn>
+        </div>
+
+        <!-- Dates -->
+        <div class="flex" style="gap: 16px">
+          <div class="flex items-center" style="gap: 8px">
+            <span style="font-size: 16px; font-weight: 500">Arrival :</span>
+            <HKDateInput />
+          </div>
+
+          <div class="flex items-center" style="gap: 8px">
+            <span style="font-size: 16px; font-weight: 500">Departure :</span>
+            <HKDateInput />
+          </div>
+        </div>
+      </div>
+
+      <HKTable :columns="tableColumns" :rows="tableRows" />
     </div>
+
+    <!-- Guest History Dialog -->
+    <q-dialog v-model="guestHistoryModel">
+      <q-card style="width: 100vw; max-width: 100vw; padding-block: 24px">
+        <q-card-section class="flex justify-center text-h5">Guest List History</q-card-section>
+        <q-card-section>
+          <div class="flex justify-end q-mb-sm">
+            <q-input
+              outlined
+              dense
+              v-model="searchModel"
+              class="input-border"
+              label="Search ResNo/NIK"
+              style="width: fit-content"
+            >
+              <template v-slot:prepend>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </div>
+          <HKTable :columns="tableColumns" :rows="tableRows" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
-import CardComponent from 'src/components/HK/Card/HKCard.vue'
-import TableComponent from 'src/components/HK/Table/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKDateInput from 'src/components/HK/Form/HKDateInput.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
+import { ref } from 'vue'
 
-const cardData = [
+const arrivalData = [
   {
-    id: 1,
-    name: 'Arrival',
-    dataName: [
-      {
-        id: 1,
-        name: 'Checked in Today',
-        room: '12',
-        person: '24'
-      },
-      {
-        id: 2,
-        name: 'Arriving',
-        room: '60',
-        person: '70'
-      },
-      {
-        id: 3,
-        name: 'Total Arrival',
-        room: '72',
-        person: '94'
-      }
-    ]
+    label: 'Checked In Today',
+    room: 5,
+    person: 10
   },
   {
-    id: 2,
-    name: 'Departure',
-    dataName: [
-      {
-        id: 1,
-        name: 'Departed Today',
-        room: '12',
-        person: '24'
-      },
-      {
-        id: 2,
-        name: 'Departing',
-        room: '60',
-        person: '70'
-      },
-      {
-        id: 3,
-        name: 'Total Departure',
-        room: '72',
-        person: '94'
-      }
-    ]
+    label: 'Arriving',
+    room: 4,
+    person: 8
+  },
+  {
+    label: 'Total Arrival',
+    room: 9,
+    person: 18
   }
 ]
 
-const dataColumns = [
+const departureData = [
   {
-    name: 'room-number',
+    label: 'Departed Today',
+    room: 5,
+    person: 10
+  },
+  {
+    label: 'Departing',
+    room: 4,
+    person: 8
+  },
+  {
+    label: 'Total Departure',
+    room: 9,
+    person: 18
+  }
+]
+
+const tableColumns = [
+  {
+    name: 'res_no',
     required: true,
-    label: 'Room Number',
+    label: 'ResNo',
     align: 'left',
     field: (row) => row.name,
-    format: (val) => `${val}`,
     sortable: true
   },
   {
-    name: 'room-status',
+    name: 'res_resource',
+    label: 'ResResource',
+    field: 'res_resource',
     align: 'left',
-    label: 'Room Status',
-    field: 'roomstatus',
     sortable: true
   },
   {
-    name: 'guest',
+    name: 'rm_no',
+    label: 'RmNo',
+    field: 'rm_no',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'r_type',
+    label: 'RType',
+    field: 'r_type',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'b_type',
+    label: 'BType',
+    field: 'b_type',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'guest_name',
     label: 'Guest Name',
-    field: 'guest',
+    field: 'guest_name',
     sortable: true,
     align: 'left'
   },
-  { name: 'reserve', label: 'Reserve Name', field: 'reserve', align: 'left' },
-  { name: 'arrival', label: 'Arrival', field: 'arrival', align: 'left' },
-  { name: 'departure', label: 'Departure', field: 'departure', align: 'left' },
   {
-    name: 'deptime',
-    label: 'DepTime',
-    field: 'deeptime',
+    name: 'arr',
+    label: 'Arr',
+    field: 'arr',
     sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
     align: 'left'
   },
   {
-    name: 'nation',
-    label: 'Nation',
-    field: 'nation',
+    name: 'arrival',
+    label: 'Arrival',
+    field: 'arrival',
     sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+    align: 'left'
+  },
+  {
+    name: 'depart',
+    label: 'Depart',
+    field: 'depart',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'night',
+    label: 'Night',
+    field: 'night',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'room_boy',
+    label: 'Room Boy',
+    field: 'room_boy',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'room_stat',
+    label: 'Room Stat',
+    field: 'room_stat',
+    sortable: true,
+    align: 'left'
+  },
+  {
+    name: 'created_date',
+    label: 'Created Date',
+    field: 'created_date',
+    sortable: true,
     align: 'left'
   }
 ]
 
-const dataRows = [
+const tableRows = [
   {
-    name: '1',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '2',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '3',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '4',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '5',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '6',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '7',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '8',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '9',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   },
   {
-    name: '10',
-    roomstatus: 'Expected Departure',
-    guest: 'Andi',
-    reserve: 'PT.KAI',
-    arrival: '11.00',
-    departure: '06.00',
-    deeptime: '06.06',
-    nation: 'Indonesia'
+    name: 188086,
+    res_resource: 'Individual Reservation',
+    rm_no: 101,
+    r_type: 'DLX',
+    b_type: 'K',
+    guest_name: 'RONO RUSTAN',
+    arr: 'RB',
+    arrival: '12/02/23',
+    depart: '13/02/23',
+    night: 1,
+    room_boy: 'ILYAS',
+    room_stat: 'ED',
+    created_date: '12/02/23'
   }
 ]
 
 export default {
   name: 'ArrivalPage',
-  components: { CardComponent, TableComponent },
+  components: { HKCard, HKDateInput, HKTable },
   setup() {
     return {
-      dataColumns,
-      dataRows,
-      cardData
+      arrivalData,
+      departureData,
+      tableColumns,
+      tableRows,
+      sortingModel: ref('Room Number'),
+      sortingOptions: ['Room Number', 'Reservation Number', 'Room Type', 'Guest Name'],
+      guestHistoryModel: ref(false),
+      searchModel: ref('')
     }
   }
 }
 </script>
 
 <style>
-.shadow {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+.input-border .q-field__control::before {
+  border-color: #d9d9d9 !important;
+}
+.input-border .q-field__label {
+  color: black;
 }
 </style>
