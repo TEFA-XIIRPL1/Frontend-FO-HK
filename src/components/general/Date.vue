@@ -21,7 +21,13 @@
     <q-popup-proxy transition-show="jump-down" transition-hide="jump-up">
       <q-date v-model="originalDate">
         <div class="row items-center justify-end q-gutter-sm">
-          <q-btn label="Cancel" color="primary" flat v-close-popup />
+          <q-btn
+            label="Cancel"
+            color="primary"
+            flat
+            v-close-popup
+            @click="() => (clicked = !clicked)"
+          />
           <q-btn label="OK" color="primary" flat @click="originalToFormatted" v-close-popup />
         </div>
       </q-date>
@@ -69,6 +75,7 @@ export default {
       const parts = this.originalDate.split('/')
       const formatted = `${parts[2]}/${parts[1]}/${parts[0]}`
       this.formattedDate = formatted
+      this.clicked = !this.clicked
 
       //Mengirim original date kepada page pengguna untuk di olah
       this.$emit('getDate', this.originalDate)
@@ -77,6 +84,7 @@ export default {
   mounted() {
     this.setFormattedDate()
     this.setOriginalDate()
+    this.$emit('getDate', this.originalDate)
   }
 }
 </script>

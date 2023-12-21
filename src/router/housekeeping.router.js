@@ -119,7 +119,7 @@ export const hkreports_routes = [
 
 export const hkroomboy_routes = [
   {
-    path: '/hk/rb/dashbboard',
+    path: '/hk/rb/dashboard',
     component: () => import('pages/HK/IMPPS/RoomBoy/Dashboard.vue')
   },
   {
