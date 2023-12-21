@@ -1,15 +1,15 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-page-container>
+    <q-page-container style="background-color: #cfd8dd; overflow-x: auto">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'BlankLayout',
-});
+  name: 'BlankLayout'
+})
 </script>

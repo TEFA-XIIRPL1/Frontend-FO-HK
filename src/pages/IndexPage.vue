@@ -1,11 +1,12 @@
 <template>
   <q-layout view="lHh LpR fFf">
-    <q-header bordered class="bg-white text-black">
+    <q-header bordered class="bg-grey text-white">
       <q-toolbar class="items-center">
         <!-- <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" /> -->
         <q-toolbar-title> Lingian Hotel Management System </q-toolbar-title>
 
         <div class="q-gutter-sm row items-center no-wrap">
+          <MessengerFloat />
           <ProfileFloat />
         </div>
       </q-toolbar>
@@ -16,9 +17,83 @@
     </q-drawer>
 
     <q-page-container>
-      <Transition name="slide-fade" appear mode="out-in">
-        <router-view :key="$route.fullPath" />
-      </Transition>
+      <q-page class="q-pa-md">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="q-ma-none text-bold">{{ currentClock }}</h4>
+            <h6 class="q-ma-none text-bold">{{ currentDate }}</h6>
+          </div>
+          <q-btn icon="o_add" color="primary" label="Create new reservation" />
+        </div>
+
+        <div class="row no-wrap q-my-lg" style="gap: 16px">
+          <div class="dashboard-box">
+            <div class="icon">
+              <q-icon name="o_calendar_today" />
+            </div>
+            <div>
+              <p class="label">New Reservations</p>
+              <h5 class="data">008</h5>
+            </div>
+          </div>
+          <div class="dashboard-box">
+            <div class="icon">
+              <q-icon name="o_bed" />
+            </div>
+            <div>
+              <p class="label">Available Rooms</p>
+              <h5 class="data">008</h5>
+            </div>
+          </div>
+          <div class="dashboard-box">
+            <div class="icon">
+              <q-icon name="o_login" />
+            </div>
+            <div>
+              <p class="label">Check In</p>
+              <h5 class="data">005</h5>
+            </div>
+          </div>
+          <div class="dashboard-box">
+            <div class="icon">
+              <q-icon name="o_logout" />
+            </div>
+            <div>
+              <p class="label">Check Out</p>
+              <h5 class="data">005</h5>
+            </div>
+          </div>
+          <div class="dashboard-box">
+            <div class="icon">
+              <q-icon name="o_query_stats" />
+            </div>
+            <div>
+              <p class="label">Occupancy Rate</p>
+              <h5 class="data">50%</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex q-gutter-md no-wrap">
+          <div class="col-grow q-pa-md bg-white rounded shadow-3">
+            <h5 class="text-bold q-ma-none">Recent Reservation Schedule</h5>
+            <q-date
+              v-model="recentReservationDate"
+              class="no-shadow"
+              style="width: 100%; max-width: 400px"
+              minimal
+            />
+          </div>
+          <div class="col-grow">
+            <div class="q-pa-md q-mb-md bg-white rounded shadow-3">
+              <h5 class="text-bold q-ma-none">Reservation Statistics</h5>
+            </div>
+            <div class="q-pa-md bg-white rounded shadow-3">
+              <h5 class="text-bold q-ma-none">Housekeeping</h5>
+            </div>
+          </div>
+        </div>
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -27,17 +102,41 @@
 import SideBar from 'src/components/SideBar.vue'
 import ProfileFloat from 'src/components/ProfileFloat.vue'
 import { ref } from 'vue'
+import MessengerFloat from 'src/components/MessengerFloat.vue'
+import { getCurrentTime } from 'src/utils/time'
 
 export default {
   setup() {
-    const leftDrawerOpen = ref(false)
+    const leftDrawerOpen = ref(false),
+      currentClock = '-',
+      currentDate = '-'
+
+    const recentReservationDate = ref('')
+
     return {
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      currentClock,
+      currentDate,
+      recentReservationDate
     }
   },
-  components: { SideBar, ProfileFloat }
+  components: { SideBar, ProfileFloat, MessengerFloat },
+  created() {
+    this.updateTime()
+
+    setInterval(() => {
+      this.updateTime()
+    }, 60000)
+  },
+  methods: {
+    toggleLeftDrawer() {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+    },
+    updateTime() {
+      let dateTimeParts = getCurrentTime().split(' ')
+      this.currentDate = dateTimeParts.slice(0, 4).join(' ')
+      this.currentClock = dateTimeParts[4]
+    }
+  }
 }
 </script>
