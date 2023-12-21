@@ -18,9 +18,7 @@
           </svg>
         </q-btn>
 
-        <q-btn padding="4px" flat>
-          <q-icon size="36px" style="color: #008444" name="o_print" />
-        </q-btn>
+        <HKPrintModal :columns="tableColumns" :rows="tableRows" />
       </div>
 
       <!-- Filtering -->
@@ -56,9 +54,10 @@
   </q-page>
 </template>
 <script>
-import HKCard from 'src/components/HK/HKCard.vue'
-import HKDateInput from 'src/components/HK/HKDateInput.vue'
-import HKTable from 'src/components/HK/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKDateInput from 'src/components/HK/Form/HKDateInput.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
+import HKPrintModal from 'src/components/HK/Modal/HKPrintModal.vue'
 import { defineComponent, ref } from 'vue'
 
 const tableColumns = [
@@ -191,7 +190,7 @@ const tableRows = [
 
 export default defineComponent({
   name: 'OOOPages',
-  components: { HKCard, HKTable, HKDateInput },
+  components: { HKCard, HKTable, HKDateInput, HKPrintModal },
   setup() {
     return {
       tableColumns,
