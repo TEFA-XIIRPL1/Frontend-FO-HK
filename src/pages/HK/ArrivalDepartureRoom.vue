@@ -5,11 +5,7 @@
         <h1 class="text-h6 text-black q-font-semibold">
           {{ datas.name }}
         </h1>
-        <q-table
-          :rows="datas.dataName"
-          :columns="cardColumns"
-          row-key="id"
-          class="q-mt-md">
+        <q-table :rows="datas.dataName" :columns="cardColumns" row-key="id" class="q-mt-md">
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td :props="props" auto-width>
@@ -37,8 +33,8 @@
 </template>
 
 <script>
-import CardComponent from 'src/components/HKCard.vue';
-import TableComponent from 'src/components/HKTable.vue';
+import CardComponent from 'src/components/HK/Card/HKCard.vue'
+import TableComponent from 'src/components/HK/Table/HKTable.vue'
 
 const cardData = [
   {
@@ -49,21 +45,21 @@ const cardData = [
         id: 1,
         name: 'Checked in Today',
         room: '12',
-        person: '24',
+        person: '24'
       },
       {
         id: 2,
         name: 'Arriving',
         room: '60',
-        person: '70',
+        person: '70'
       },
       {
         id: 3,
         name: 'Total Arrival',
         room: '72',
-        person: '94',
-      },
-    ],
+        person: '94'
+      }
+    ]
   },
   {
     id: 2,
@@ -73,23 +69,23 @@ const cardData = [
         id: 1,
         name: 'Departed Today',
         room: '12',
-        person: '24',
-       },
+        person: '24'
+      },
       {
         id: 2,
         name: 'Departing',
         room: '60',
-        person: '70',
+        person: '70'
       },
       {
         id: 3,
         name: 'Total Departure',
         room: '72',
-        person: '94',
-      },
-    ],
-  },
-];
+        person: '94'
+      }
+    ]
+  }
+]
 
 const dataColumns = [
   {
@@ -99,21 +95,21 @@ const dataColumns = [
     align: 'left',
     field: (row) => row.name,
     format: (val) => `${val}`,
-    sortable: true,
+    sortable: true
   },
   {
     name: 'room-status',
     align: 'left',
     label: 'Room Status',
     field: 'roomstatus',
-    sortable: true,
+    sortable: true
   },
   {
     name: 'guest',
     label: 'Guest Name',
     field: 'guest',
     sortable: true,
-    align: 'left',
+    align: 'left'
   },
   { name: 'reserve', label: 'Reserve Name', field: 'reserve', align: 'left' },
   { name: 'arrival', label: 'Arrival', field: 'arrival', align: 'left' },
@@ -124,7 +120,7 @@ const dataColumns = [
     field: 'deeptime',
     sortable: true,
     sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-    align: 'left',
+    align: 'left'
   },
   {
     name: 'nation',
@@ -132,9 +128,9 @@ const dataColumns = [
     field: 'nation',
     sortable: true,
     sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-    align: 'left',
-  },
-];
+    align: 'left'
+  }
+]
 
 const dataRows = [
   {
@@ -145,7 +141,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '2',
@@ -155,7 +151,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '3',
@@ -165,7 +161,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '4',
@@ -175,7 +171,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '5',
@@ -185,7 +181,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '6',
@@ -195,7 +191,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '7',
@@ -205,7 +201,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '8',
@@ -215,7 +211,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '9',
@@ -225,7 +221,7 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
+    nation: 'Indonesia'
   },
   {
     name: '10',
@@ -235,9 +231,9 @@ const dataRows = [
     arrival: '11.00',
     departure: '06.00',
     deeptime: '06.06',
-    nation: 'Indonesia',
-  },
-];
+    nation: 'Indonesia'
+  }
+]
 
 export default {
   name: 'ArrivalPage',
@@ -246,10 +242,10 @@ export default {
     return {
       dataColumns,
       dataRows,
-      cardData,
-    };
-  },
-};
+      cardData
+    }
+  }
+}
 </script>
 
 <style>
