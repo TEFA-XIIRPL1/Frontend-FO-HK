@@ -284,7 +284,7 @@
               <p class="text-weight-bold text-body1 q-mt-sm">Arrival :</p>
             </div>
             <div>
-              <HKDateInput style="height: 10px; border-radius: 10px" size="16px" />
+              <HKDateInput style="height: 10px; border-radius: 10px;" size="16px" />
             </div>
           </div>
           <div class="row q-gutter-sm">
