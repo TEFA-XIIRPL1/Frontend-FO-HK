@@ -28,20 +28,7 @@
                     outlined
                   >
                   </q-select>
-                  <q-btn flat round color="green" size="18px" class="q-mt-sm q-ml-md">
-                    <svg
-                      width="29"
-                      height="28"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.5 6.88889V3.05556H7.5V6.88889H5V0.5H20V6.88889H17.5ZM20 12.6389C20.3542 12.6389 20.6512 12.5162 20.8912 12.2709C21.1312 12.0256 21.2508 11.7223 21.25 11.3611C21.25 10.9991 21.13 10.6954 20.89 10.4501C20.65 10.2047 20.3533 10.0825 20 10.0833C19.6458 10.0833 19.3487 10.206 19.1087 10.4513C18.8687 10.6967 18.7492 10.9999 18.75 11.3611C18.75 11.7231 18.87 12.0268 19.11 12.2722C19.35 12.5175 19.6467 12.6397 20 12.6389ZM17.5 20.9444V15.8333H7.5V20.9444H17.5ZM20 23.5H5V18.3889H0V10.7222C0 9.63611 0.364583 8.72548 1.09375 7.99033C1.82292 7.25519 2.70833 6.88804 3.75 6.88889H21.25C22.3125 6.88889 23.2033 7.25646 23.9225 7.99161C24.6417 8.72676 25.0008 9.63696 25 10.7222V18.3889H20V23.5ZM22.5 15.8333V10.7222C22.5 10.3602 22.38 10.0565 22.14 9.81117C21.9 9.56583 21.6033 9.44359 21.25 9.44444H3.75C3.39583 9.44444 3.09875 9.56711 2.85875 9.81244C2.61875 10.0578 2.49917 10.361 2.5 10.7222V15.8333H5V13.2778H20V15.8333H22.5Z"
-                        fill="#008444"
-                      />
-                    </svg>
-                  </q-btn>
+                  <HKPrintModal :rows="dataRows" :columns="dataColumns" />
                 </div>
               </div>
 
@@ -280,12 +267,13 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import HKCard from 'src/components/HK/HKCard.vue'
-import HKTable from 'src/components/HK/HKTable.vue'
+import HKCard from 'src/components/HK/Card/HKCard.vue'
+import HKTable from 'src/components/HK/Table/HKTable.vue'
+import HKPrintModal from 'src/components/HK/Modal/HKPrintModal.vue'
 
 export default defineComponent({
   name: 'StatusPage',
-  components: { HKCard },
+  components: { HKCard, HKPrintModal },
   setup() {
     const status = ref('cleanChecked')
     return {
@@ -390,12 +378,11 @@ const dataRows = [
 .q-field--auto-height.q-field--dense .q-field__control {
   border-radius: 10px;
 }
-.tablestatus thead tr th {
-}
 
 .ambatukam {
   display: flex;
-  align-items: center;
+  align-items: end;
+  column-gap: 16px;
   width: 80%;
 }
 .rstatus {
