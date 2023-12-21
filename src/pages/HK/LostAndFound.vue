@@ -74,6 +74,44 @@
 
     <!-- Table -->
     <div style="width: 100%" class="lostFoundTable">
+      <!-- Filtering -->
+      <div class="flex q-mb-sm justify-between" style="gap: 16px">
+        <div class="flex" style="gap: 16px">
+          <div class="flex items-center" style="gap: 8px">
+            <span style="font-size: 16px; font-weight: 500">Sorting :</span>
+            <q-select
+              outlined
+              dense
+              v-model="sortingModel"
+              dropdown-icon="expand_more"
+              :options="sortingOptions"
+              style="width: 12rem"
+              class="input-border"
+            />
+          </div>
+
+          <div class="flex items-center" style="gap: 8px">
+            <span style="font-size: 16px; font-weight: 500">Date :</span>
+            <HKDateInput />
+          </div>
+        </div>
+
+        <div>
+          <q-input
+            outlined
+            dense
+            v-model="searchModel"
+            class="input-border"
+            label="Item Description"
+            style="width: fit-content"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
       <q-table
         :rows="rows"
         :columns="columns"
@@ -99,8 +137,8 @@
             <q-td key="room_no">
               {{ props.row.room_no }}
             </q-td>
-            <q-td key="id">
-              {{ props.row.id }}
+            <q-td key="pic">
+              {{ props.row.pic }}
             </q-td>
             <q-td key="item_desc">
               {{ props.row.item_desc }}
@@ -134,15 +172,18 @@
 
               <!-- Modal -->
               <q-dialog v-model="props.row.dialogActive">
-                <q-card style="max-width: 100vw; max-height: 90vh">
+                <q-card style="max-width: 100vw; max-height: 90vh; border-radius: 20px">
+                  <q-card-section class="text-h6" style="padding-inline: 24px"
+                    >View Image</q-card-section
+                  >
                   <q-img
                     :src="props.row.image"
                     spinner-color="primary"
                     :ratio="16 / 9"
                     style="border-radius: 0px"
-                    :style="$q.screen.lt.sm ? 'width: 90vw;' : 'width: 70vw;'"
+                    fit="contain"
+                    :style="$q.screen.lt.sm ? 'width: 85vw;' : 'width: 65vw; margin: 24px;'"
                   />
-                  <q-card-section>{{ props.row.date }}</q-card-section>
                 </q-card>
               </q-dialog>
             </q-td>
@@ -184,9 +225,10 @@
 </template>
 
 <script>
-import HKCard from 'src/components/HKCard.vue'
+import HKCard from 'src/components/HK/HKCard.vue'
+import HKDateInput from 'src/components/HK/HKDateInput.vue'
 import HKChart from 'src/components/charts/HKChart.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 const columns = [
   {
@@ -212,9 +254,9 @@ const columns = [
     sortable: true
   },
   {
-    name: 'id',
-    label: 'ID',
-    field: 'id',
+    name: 'pic',
+    label: 'PIC',
+    field: 'pic',
     align: 'left',
     sortable: true
   },
@@ -272,13 +314,13 @@ const rows = [
     date: '17/09/23',
     time: '10:00:02',
     room_no: '10',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Mainan anak',
     reported_by: 'AA',
     phone_no: '+6287xxxxxxxx',
     reported_date: '17/10/23',
     location: '10',
-    image: 'https://images.unsplash.com/photo-1701017655822-d4f7a0569b40?w=700',
+    image: '../src/assets/img/lostItem.png',
     action: ['edit', 'delete'],
     dialogActive: false
   },
@@ -287,7 +329,7 @@ const rows = [
     date: '17/09/23',
     time: '10:00:02',
     room_no: '08',
-    id: 241,
+    pic: 'AD',
     item_desc: 'Jaket biru',
     reported_by: 'DD',
     phone_no: '+6282xxxxxxxx',
@@ -302,13 +344,13 @@ const rows = [
     date: '17/09/23',
     time: '10:15:00',
     room_no: '07',
-    id: 241,
+    pic: 'AZ',
     item_desc: 'Kabel data',
     reported_by: 'MM',
     phone_no: '+6281xxxxxxxx',
     reported_date: '17/10/23',
     location: '07',
-    image: 'https://images.unsplash.com/photo-1701025034709-bef78e69d1ee?w=700',
+    image: 'https://images.unsplash.com/photo-1701017655822-d4f7a0569b40?w=700',
     action: ['edit', 'delete'],
     dialogActive: false
   },
@@ -317,7 +359,7 @@ const rows = [
     date: '17/09/23',
     time: '10:30:15',
     room_no: '01',
-    id: 241,
+    pic: 'EB',
     item_desc: 'Topi',
     reported_by: 'MC',
     phone_no: '+6285xxxxxxxx',
@@ -332,7 +374,7 @@ const rows = [
     date: '17/09/23',
     time: '10:55:34',
     room_no: '06',
-    id: 241,
+    pic: 'CF',
     item_desc: 'Obat-obatan',
     reported_by: 'ED',
     phone_no: '+6283xxxxxxxx',
@@ -347,7 +389,7 @@ const rows = [
     date: '17/09/23',
     time: '10:00:02',
     room_no: '10',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Mainan anak',
     reported_by: 'AA',
     phone_no: '+6287xxxxxxxx',
@@ -362,7 +404,7 @@ const rows = [
     date: '17/09/23',
     time: '10:00:02',
     room_no: '08',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Jaket biru',
     reported_by: 'DD',
     phone_no: '+6282xxxxxxxx',
@@ -377,7 +419,7 @@ const rows = [
     date: '17/09/23',
     time: '10:15:00',
     room_no: '07',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Kabel data',
     reported_by: 'MM',
     phone_no: '+6281xxxxxxxx',
@@ -392,7 +434,7 @@ const rows = [
     date: '17/09/23',
     time: '10:30:15',
     room_no: '01',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Topi',
     reported_by: 'MC',
     phone_no: '+6285xxxxxxxx',
@@ -407,7 +449,7 @@ const rows = [
     date: '17/09/23',
     time: '10:55:34',
     room_no: '06',
-    id: 241,
+    pic: 'AA',
     item_desc: 'Obat-obatan',
     reported_by: 'ED',
     phone_no: '+6283xxxxxxxx',
@@ -470,7 +512,15 @@ export default defineComponent({
   name: 'LostAndFoundPage',
   components: {
     HKChart,
-    HKCard
+    HKCard,
+    HKDateInput
+  },
+  setup() {
+    return {
+      sortingModel: ref('Room Number'),
+      sortingOptions: ['Room Number', 'Reservation Number', 'Room Type', 'Guest Name'],
+      searchModel: ref('')
+    }
   },
   data() {
     return {
@@ -524,6 +574,13 @@ export default defineComponent({
 }
 .lostFoundTable .disabled * {
   opacity: 0;
+}
+
+.input-border .q-field__control::before {
+  border-color: #d9d9d9 !important;
+}
+.input-border .q-field__label {
+  color: black;
 }
 
 @media (max-width: 600px) {
