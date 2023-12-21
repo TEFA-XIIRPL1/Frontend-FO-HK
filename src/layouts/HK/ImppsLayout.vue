@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title class="row items-center justify-between">
           <div>
-            <q-icon name="chevron_left" size="30px" />
+            <q-icon name="chevron_left" size="30px" @click="goBack" style="cursor: pointer" />
             <q-btn flat round dense icon="o_notifications" size="20px">
               <q-badge color="red" floating>4</q-badge>
               <q-menu>
@@ -77,6 +77,11 @@
 
 <script>
 export default {
-  name: 'immpsLayout'
+  name: 'immpsLayout',
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
+  }
 }
 </script>

@@ -4,7 +4,7 @@
     <div class="q-mt-md q-pl-md">
       <IMPPSSelectedTable :rows="rows" :columns="columns" title="Task Queue" hidePagination />
     </div>
-    <form action="" class="q-mt-lg q-mx-auto" style="width: 242px; min-width: 200px">
+    <q-form class="q-mt-lg q-mx-auto" style="width: 242px; min-width: 200px">
       <div class="row items-center justify-between full-width">
         <q-btn
           dense
@@ -48,9 +48,10 @@
           color="primary"
           noCaps
           style="border-radius: 8px; height: 55px"
+          to="/hk/rb/lostfound"
         />
       </div>
-    </form>
+    </q-form>
     <div class="performance q-mt-xl">
       <div class="row items-center justify-center">
         <div class="bg-black q-pa-sm" style="border-radius: 5px">
@@ -171,10 +172,13 @@ export default {
 .rb .q-field--dense .q-field__control {
   width: 242px !important;
   min-width: 200px;
-  height: 65.6px !important;
+  height: 100px !important;
   border-radius: 8px;
   background: white;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.25);
+}
+.rb .rb-input textarea {
+  resize: none;
 }
 .performance {
   width: fit-content;
