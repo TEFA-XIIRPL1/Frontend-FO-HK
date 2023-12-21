@@ -1,6 +1,61 @@
 <template>
   <q-page class="flex flex-center page-padding">
-    <div style="width: 100%; position: relative; overflow: hidden">
+    <div class="flex full-width" style="gap: 16px; margin-bottom: 24px">
+      <q-btn
+        dense
+        outline
+        no-caps
+        label="Edit Room"
+        align="left"
+        style="width: 124px; height: fit-content; padding-inline: 8px; color: #757575"
+      />
+      <!-- <div v-for="(status, index) in roomStatus" :key="index" class="column" style="flex: 1 1 0%">
+        <div v-if="index === 3" class="column full-height justify-between">
+          <div
+            class="flex items-center justify-center"
+            v-for="statusItem in status"
+            :key="statusItem.status"
+            style="
+              width: 100%;
+              font-size: 14px;
+              line-height: 16px;
+              padding: 8px 24px;
+              border: 1px solid #ccc;
+              white-space: nowrap;
+            "
+            :style="`background-color: ${statusItem.bg_color}; color: ${statusItem.text_color};`"
+          >
+            {{ statusItem.status }}
+          </div>
+        </div>
+
+        <div
+          v-else
+          v-for="(statusItem, index) in status"
+          :key="index"
+          class="flex items-center justify-center"
+          style="
+            width: 50%;
+            font-size: 14px;
+            line-height: 16px;
+            padding: 8px 24px;
+            border: 1px solid #ccc;
+            white-space: nowrap;
+          "
+          :style="`background-color: ${statusItem.bg_color}; color: ${
+            statusItem.text_color
+          }; align-self: ${index % 2 === 0 ? '' : 'end'};`"
+        >
+          {{ statusItem.status }}
+        </div>
+      </div> -->
+    </div>
+
+    <!-- ROOMS -->
+    <div
+      style="width: 100%; position: relative; overflow: hidden"
+      :style="`margin-inline: ${$q.screen.lt.md ? '1rem' : '4rem'};`"
+    >
       <q-img src="/src/assets/svg/roomplan_bg.svg" />
 
       <!-- LEFT ROOMS -->
@@ -182,7 +237,26 @@
       </div>
     </div>
 
-    <div class="full-width">VC</div>
+    <div class="flex full-width" style="gap: 16px; margin-top: 24px">
+      <div v-for="(status, index) in roomStatus" :key="index" class="column" style="flex: 1 1 0%">
+        <div
+          v-for="statusItem in status"
+          :key="statusItem.status"
+          class="flex items-center justify-center"
+          style="
+            font-size: 14px;
+            line-height: 16px;
+            padding: 10px 0;
+            flex: 1 1 0%;
+            border: 1px solid #ccc;
+            white-space: nowrap;
+          "
+          :style="`background-color: ${statusItem.bg_color}; color: ${statusItem.text_color};`"
+        >
+          {{ statusItem.status }} {{ index !== 3 ? `= ${statusItem.desc}` : '' }}
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -246,16 +320,11 @@ export default defineComponent({
 }
 
 .page-padding {
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem;
 }
 @media (min-width: 480px) {
   .page-padding {
-    padding: 0 2rem;
-  }
-}
-@media (min-width: 1024px) {
-  .page-padding {
-    padding: 0 4rem;
+    padding: 1rem 1rem;
   }
 }
 </style>
