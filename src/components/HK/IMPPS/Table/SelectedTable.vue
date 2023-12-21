@@ -1,17 +1,47 @@
 <template>
   <div class="selected-table">
+    <div v-if="btnEdit" class="q-mt-md row items-center justify-end">
+      <q-btn
+        dense
+        flat
+        rounded
+        icon="sym_o_checklist"
+        color="primary"
+        class="q-mr-sm"
+        @click="
+          () => {
+            selectMode = !selectMode
+          }
+        "
+      />
+    </div>
     <q-table
+      v-if="isSelect && selectMode"
       :rows="rows"
       :columns="columns"
-      row-key="name"
+      row-key="roomNo"
       square
       :card-style="{ boxShadow: 'none' }"
       rows-per-page-label="Show"
       :hide-pagination="hidePagination"
       :dense="$q.screen.lt.md"
       :title="title"
+      no-data-label="Oops! There is no data"
       selection="single"
       v-model:selected="selected"
+    />
+    <q-table
+      v-else
+      :rows="rows"
+      :columns="columns"
+      row-key="roomNo"
+      square
+      :card-style="{ boxShadow: 'none' }"
+      rows-per-page-label="Show"
+      :hide-pagination="hidePagination"
+      :dense="$q.screen.lt.md"
+      :title="title"
+      no-data-label="Oops! There is no data"
     />
   </div>
 </template>
@@ -21,16 +51,25 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'IMPPSSelectedTable',
+  emits: ['getTableData'],
   setup() {
     return {
-      selected: ref([])
+      selected: ref([]),
+      selectMode: ref(false)
     }
   },
   props: {
     columns: Array,
     rows: Array,
     hidePagination: Boolean,
-    title: String
+    title: String,
+    isSelect: Boolean,
+    btnEdit: Boolean
+  },
+  watch: {
+    selected() {
+      this.$emit('getTableData', this.selected)
+    }
   }
 })
 </script>

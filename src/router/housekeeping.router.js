@@ -130,7 +130,7 @@ export const hkroomboy_routes = [
 
 export const hksupervisor_routes = [
   {
-    path: '/hk/spv/dashbboard',
+    path: '/hk/spv/dashboard',
     component: () => import('pages/HK/IMPPS/Supervisor/Dashboard.vue')
   }
 ]

@@ -2,7 +2,15 @@
   <div class="rb full-width">
     <UserGreet class="q-mt-md q-px-md" name="Aldi Rahadian" role="Room Boy" />
     <div class="q-mt-md q-pl-md">
-      <IMPPSSelectedTable :rows="rows" :columns="columns" title="Task Queue" hidePagination />
+      <IMPPSSelectedTable
+        :rows="rows"
+        :columns="columns"
+        title="Task Queue"
+        @getTableData="getTableData"
+        isSelect
+        btnEdit
+        hidePagination
+      />
     </div>
     <q-form class="q-mt-lg q-mx-auto" style="width: 242px; min-width: 200px">
       <div class="row items-center justify-between full-width">
@@ -76,11 +84,11 @@ import IMPPSSelectedTable from 'src/components/HK/IMPPS/Table/SelectedTable.vue'
 
 const columns = [
   {
-    name: 'name',
+    name: 'roomNo',
     required: true,
     label: 'Room No',
     align: 'left',
-    field: (row) => row.name,
+    field: (row) => row.roomNo,
     format: (val) => `${val}`,
     sortable: true
   },
@@ -88,14 +96,14 @@ const columns = [
   { name: 'Schedule', label: 'Schedule', align: 'left', field: 'Schedule' },
   { name: 'Standard', label: 'Standard', align: 'left', field: 'Standard' },
   { name: 'Actual', label: 'Actual', align: 'left', field: 'Actual' },
-  { name: 'Remarks', label: 'Person In Change', align: 'left', field: 'Remarks' },
+  { name: 'Remarks', label: 'Remarks', align: 'left', field: 'Remarks' },
   { name: 'Status', label: 'Status', align: 'center', field: 'Status' },
   { name: 'Comments', label: 'Comments', align: 'center', field: 'Comments' }
 ]
 
 const rows = [
   {
-    name: '101',
+    roomNo: '101',
     RoomType: 'DLX',
     Schedule: '07.00 - 07.40',
     Standard: '40 Minute',
@@ -105,7 +113,7 @@ const rows = [
     Comments: 'Sprei masih kotor'
   },
   {
-    name: '102',
+    roomNo: '102',
     RoomType: 'DLX',
     Schedule: '07.45 - 08.00',
     Standard: '40 Minute',
@@ -115,7 +123,7 @@ const rows = [
     Comments: 'Sprei masih kotor'
   },
   {
-    name: '103',
+    roomNo: '103',
     RoomType: 'DLX',
     Schedule: '07.00 - 07.40',
     Standard: '40 Minute',
@@ -125,7 +133,7 @@ const rows = [
     Comments: 'Sprei masih kotor'
   },
   {
-    name: '104',
+    roomNo: '104',
     RoomType: 'DLX',
     Schedule: '07.00 - 07.40',
     Standard: '40 Minute',
@@ -135,7 +143,7 @@ const rows = [
     Comments: 'Sprei masih kotor'
   },
   {
-    name: '105',
+    roomNo: '105',
     RoomType: 'DLX',
     Schedule: '07.00 - 07.40',
     Standard: '40 Minute',
@@ -155,7 +163,13 @@ export default {
   data() {
     return {
       rows,
-      columns
+      columns,
+      selected: []
+    }
+  },
+  methods: {
+    getTableData(data) {
+      this.selected = data
     }
   }
 }
