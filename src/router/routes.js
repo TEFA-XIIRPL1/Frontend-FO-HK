@@ -51,13 +51,13 @@ const routes = [
 
   {
     path: '/hk/rb',
-    component: () => import('layouts/HK/ImmpsLayout.vue'),
+    component: () => import('layouts/HK/ImppsLayout.vue'),
     children: hkroomboy_routes
   },
 
   {
     path: '/hk/spv',
-    component: () => import('layouts/HK/ImmpsLayout.vue'),
+    component: () => import('layouts/HK/ImppsLayout.vue'),
     children: hksupervisor_routes
   },
 
