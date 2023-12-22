@@ -4,7 +4,8 @@ const frontoffice_routes = [
     component: () => import('pages/FO/GuestList.vue'),
     meta: {
       title: 'Arrival Guest List',
-      main_route: true
+      main_route: true,
+      protected: true
     }
   },
   {

@@ -111,12 +111,28 @@
             <template v-slot:body="props">
               <q-tr :props="props">
                 <template v-for="(cell, key, i) in props.row" :key="i">
-                  <q-td v-if="!['ResRoomNo'].includes(key)" :style="cell.style">
+                  <q-td v-if="!['ResRoomNo', 'RoomBoy'].includes(key)" :style="cell.style">
                     {{ cell.data }}
+                  </q-td>
+                  <q-td v-if="['RoomBoy'].includes(key)" :style="cell.style">
+                    <q-avatar
+                      v-for="(rb, i) in cell.data"
+                      :key="i"
+                      size="40px"
+                      class="overlapping"
+                      :style="`left: ${i * 25}px`"
+                    >
+                      <img :src="rb.user.picture" />
+                    </q-avatar>
                   </q-td>
                 </template>
                 <q-td key="" :props="props" style="width: 10px">
-                  <q-btn flat rounded size="13px" style="color: #008444"
+                  <q-btn
+                    flat
+                    rounded
+                    size="13px"
+                    @click="setRoomResv(props.row)"
+                    style="color: #008444"
                     ><svg
                       width="19"
                       height="19"
@@ -162,7 +178,7 @@ import FOMenubar from 'src/components/FOMenubar.vue'
 import MultiPane from 'src/layouts/MultiPane.vue'
 import GuestForm from 'src/pages/FO/fragments/GuestForm.vue'
 import { formatDate } from 'src/utils/time'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { allObjectsInArray } from 'src/utils/datatype'
 
 export default defineComponent({
@@ -298,6 +314,10 @@ export default defineComponent({
     }
   },
   methods: {
+    setRoomResv(data) {
+      this.$ResvStore.currentResvId = data['ResNo'].data
+      this.$ResvStore.currentRoomResvId = data['ResRoomNo'].data
+    },
     onPaginationChange(props) {
       this.pagination = props.pagination
       this.fetchData()
@@ -345,7 +365,7 @@ export default defineComponent({
             Arrival: { data: formatDate(rr.reservation.arrivalDate), style: {} },
             Depart: { data: formatDate(rr.reservation.departureDate), style: {} },
             Night: { data: rr.reservation.manyNight, style: {} },
-            RoomBoy: { data: '', style: {} },
+            RoomBoy: { data: rr.roomMaids, style: {} },
             RoomRate: { data: rr.arrangment.rate, style: {} },
             CreatedDate: { data: formatDate(rr.reservation.created_at), style: {} }
           })

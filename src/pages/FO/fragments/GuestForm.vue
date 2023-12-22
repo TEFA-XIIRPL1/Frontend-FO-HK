@@ -1,7 +1,10 @@
 <template>
   <div class="q-mt-sm row no-wrap q-gutter-md">
     <div class="">
-      <q-img src="/src/assets/img/thumbnaul-form.png" class="width-image rounded-borders" />
+      <q-img
+        :src="roomImage || '/src/assets/img/thumbnaul-form.png'"
+        class="width-image rounded-borders"
+      />
     </div>
 
     <div class="col-grow">
@@ -39,7 +42,13 @@
         </q-btn>
 
         <!-- remove reservation  -->
-        <q-btn flat square color="primary" class="border-button rounded-borders">
+        <q-btn
+          @click="removeRoomResv"
+          flat
+          square
+          color="primary"
+          class="border-button rounded-borders"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="19"
@@ -161,19 +170,21 @@
       <q-input
         dense
         outlined
-        v-model="text"
+        v-model="guestName"
         label="Guest Name/ No Handphone"
         class="q-mt-sm width-full"
       />
 
       <div style="gap: 8px" class="row no-wrap items-center q-mt-sm">
-        <div class="bg-primary-tint text-primary text-bold q-px-sm rounded-borders">#ResNo</div>
+        <div class="bg-primary-tint text-primary text-bold q-px-sm rounded-borders">
+          {{ resvNo || '#ResNo' }}
+        </div>
 
         <q-select
           outlined
           dense
-          v-model="reservationResource"
-          :options="reservation"
+          v-model="resvResource"
+          :options="resvResourceOpts"
           label="Reservation Resource"
           dropdown-icon="expand_more"
           class="col-grow"
@@ -184,8 +195,8 @@
         <q-select
           outlined
           dense
-          v-model="rmtypemodel"
-          :options="rmtype"
+          v-model="roomType"
+          :options="roomTypeOpts"
           label="RmType"
           dropdown-icon="expand_more"
           class="full-width"
@@ -194,8 +205,8 @@
         <q-select
           outlined
           dense
-          v-model="roomnomodel"
-          :options="roomno"
+          v-model="roomNo"
+          :options="roomNoOpts"
           label="Room No"
           dropdown-icon="expand_more"
           class="full-width"
@@ -204,26 +215,26 @@
         <q-select
           outlined
           dense
-          v-model="bedmodel"
-          :options="typebedModel"
+          v-model="roomBed"
+          :options="roomBedOpts"
           label="Type Bed"
           dropdown-icon="expand_more"
           class="full-width"
         >
-          <template v-slot:option="typebedModel">
-            <q-item v-bind="typebedModel.itemProps">
+          <template v-slot:option="roomBedOpts">
+            <q-item v-bind="roomBedOpts.itemProps">
               <q-item-section avatar>
                 <div class="flex justify-center">
-                  <q-icon size="24px" :name="typebedModel.opt.icon" />
+                  <q-icon size="24px" :name="roomBedOpts.opt.icon" />
                   <q-icon
                     size="24px"
-                    :name="typebedModel.opt.icon"
-                    v-if="typebedModel.index === 1"
+                    :name="roomBedOpts.opt.icon"
+                    v-if="roomBedOpts.opt.label === 'TWIN'"
                   />
                 </div>
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ typebedModel.opt.label }}</q-item-label>
+                <q-item-label>{{ roomBedOpts.opt.label }}</q-item-label>
               </q-item-section>
             </q-item>
           </template>
@@ -240,11 +251,11 @@
         dense
         class="text-capitalize dropdown-date full-width"
         style="border: 1px #00000030 solid"
-        :label="formattedDate"
+        :label="arrivalDepartLabel"
         icon="o_calendar_today"
         dropdown-icon="o_expand_more"
       >
-        <q-date v-model="datePicker" range />
+        <q-date v-model="arrivalDepart" range />
       </q-btn-dropdown>
 
       <div class="text-bold q-mt-sm">Adult &nbsp;&nbsp;&nbsp;Child &nbsp;&nbsp;&nbsp;Baby</div>
@@ -255,7 +266,7 @@
         dense
         class="text-capitalize dropdown-date full-width"
         style="border: 1px #00000030 solid"
-        :label="labeldropdown"
+        :label="guestsLabel"
         icon="meeting_room"
         dropdown-icon="o_expand_more"
       >
@@ -270,20 +281,20 @@
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('adult', -1)"
-                    :disable="guestCounts.adult <= 1"
+                    @click="updateGuestsCount('adult', -1)"
+                    :disable="guests.adult <= 1"
                   >
                     <q-icon name="remove" color="white" size="16px" />
                   </q-btn>
 
-                  <div>{{ guestCounts.adult }}</div>
+                  <div>{{ guests.adult }}</div>
 
                   <q-btn
                     flat
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('adult', 1)"
+                    @click="updateGuestsCount('adult', 1)"
                     ><q-icon name="add" color="white" size="16px" />
                   </q-btn>
                 </div>
@@ -300,20 +311,20 @@
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('child', -1)"
-                    :disable="guestCounts.child < 1"
+                    @click="updateGuestsCount('child', -1)"
+                    :disable="guests.child < 1"
                   >
                     <q-icon name="remove" color="white" size="16px" />
                   </q-btn>
 
-                  <div>{{ guestCounts.child }}</div>
+                  <div>{{ guests.child }}</div>
 
                   <q-btn
                     flat
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('child', 1)"
+                    @click="updateGuestsCount('child', 1)"
                     ><q-icon name="add" color="white" size="16px" />
                   </q-btn>
                 </div></div
@@ -329,20 +340,20 @@
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('baby', -1)"
-                    :disable="guestCounts.baby < 1"
+                    @click="updateGuestsCount('baby', -1)"
+                    :disable="guests.baby < 1"
                   >
                     <q-icon name="remove" color="white" size="16px" />
                   </q-btn>
 
-                  <div>{{ guestCounts.baby }}</div>
+                  <div>{{ guests.baby }}</div>
 
                   <q-btn
                     flat
                     dense
                     square
                     style="background-color: #069550"
-                    @click="updateGuestCount('baby', 1)"
+                    @click="updateGuestsCount('baby', 1)"
                     ><q-icon name="add" color="white" size="16px" />
                   </q-btn>
                 </div></div
@@ -358,8 +369,8 @@
         <q-select
           outlined
           dense
-          v-model="resstatusmodel"
-          :options="resstatus"
+          v-model="resvStatus"
+          :options="resvStatusOpts"
           label="Status"
           dropdown-icon="expand_more"
           style="width: 150px"
@@ -438,7 +449,7 @@
 
       <div style="display: flex; justify-content: space-between" class="q-mt-sm">
         <p class="text-bold q-ma-none">Balance:</p>
-        <p class="text-bold q-ma-none">Rp 0.00</p>
+        <p class="text-bold q-ma-none">Rp {{ balance }}</p>
       </div>
 
       <q-separator class="q-mt-sm bg-grey" size="1px" />
@@ -453,7 +464,7 @@
       >
         <q-card>
           <q-input
-            v-model="textarea"
+            v-model="resvRemark"
             label="Note..."
             dense
             outlined
@@ -485,7 +496,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'GuestForm',
@@ -494,14 +505,7 @@ export default defineComponent({
     const isRoSelected = ref(false)
     const isKtpSelected = ref(false)
     const isSimSelected = ref(false)
-    const datePicker = ref({ from: null, to: null })
-    const formattedDate = ref('Arrival - Depature, 1 Nights')
-    const labeldropdown = ref('1 Adult, 0 Child, 0 Baby')
-    const guestCounts = ref({
-      adult: 1, // Inisialisasi jumlah adult ke 1
-      child: 0,
-      baby: 0
-    })
+
     const columns = [
       {
         required: true,
@@ -537,35 +541,6 @@ export default defineComponent({
       }
     ]
 
-    function formatDate() {
-      if (datePicker.value.from && datePicker.value.to) {
-        const fromDate = new Date(datePicker.value.from)
-        const toDate = new Date(datePicker.value.to)
-
-        const options = {
-          month: 'numeric',
-          day: 'numeric'
-        }
-
-        const formattedFromDate = fromDate.toLocaleDateString('en-gb', options)
-        const formattedToDate = toDate.toLocaleDateString('en-gb', options)
-
-        // Hitung selisih hari antara kedua tanggal
-        const diffTime = Math.abs(toDate - fromDate)
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-        formattedDate.value = `${formattedFromDate} - ${formattedToDate}, ${diffDays} Nights`
-      }
-    }
-
-    function updateGuestCount(type, value) {
-      // Memastikan jumlah tidak kurang dari 0
-      guestCounts.value[type] = Math.max(0, guestCounts.value[type] + value)
-
-      // Mengupdate label dropdown
-      updateDropdownLabel()
-    }
-
     function toggleRbSelected() {
       isRbSelected.value = !isRbSelected.value
       isRoSelected.value = false // Reset the state of RO button
@@ -586,15 +561,28 @@ export default defineComponent({
       isKtpSelected.value = false // Reset the state of KTP button
     }
 
-    function updateDropdownLabel() {
-      const adultLabel = `${guestCounts.value.adult} Adult`
-      const childLabel = `${guestCounts.value.child} Child`
-      const babyLabel = `${guestCounts.value.baby} Baby`
-
-      labeldropdown.value = `${adultLabel}, ${childLabel}, ${babyLabel}`
-    }
-
     return {
+      roomImage: ref(''),
+      guestName: ref(''),
+      resvNo: ref(''),
+      resvResource: ref(null),
+      resvResourceOpts: ['Individual reservation', 'Walk In'],
+      arrivalDepart: ref({ from: null, to: null }),
+      arrivalDepartLabel: ref('Arrival - Depature, 1 Nights'),
+      guests: ref({ adult: 1, child: 0, baby: 0 }),
+      guestsLabel: ref('1 Adult, 0 Child, 0 Baby'),
+      resvStatus: ref(null),
+      resvStatusOpts: ref([]),
+      balance: ref(0),
+      resvRemark: ref(''),
+      roomNo: ref(null),
+      roomType: ref(null),
+      roomBed: ref(null),
+      roomNoOpts: ref([]),
+      roomTypeOpts: ref([]),
+      roomBedOpts: ref([]),
+      loading: ref(false),
+
       isRbSelected,
       isRoSelected,
       toggleRbSelected,
@@ -609,59 +597,191 @@ export default defineComponent({
       nameidcard: ref(''),
       idcardnumber: ref(''),
       address: ref(''),
-      datePicker,
-      formattedDate,
-      formatDate,
-      labeldropdown,
-      updateDropdownLabel,
-      guestCounts,
-      text: ref(''),
-      textarea: ref(''),
-      selected: ref([]),
-      updateGuestCount,
-      reservationResource: ref(null),
-      rmtypemodel: ref(null),
-      roomnomodel: ref(null),
-      bedmodel: ref(null),
-      resstatusmodel: ref(null),
-      resstatus: ['Guaranted', '6 PM', 'Tentative'],
-      reservation: ['Individual reservation', 'Walk In'],
-      rmtype: ['Deluxe (DLXX)', 'Standard (STD)', 'Family(FML)'],
-      roomno: ['101', '102', '103'],
-      typebed: ['King Bed', 'Twin Bed', 'Single Bed'],
-      typebedModel: [
-        {
-          label: 'King Bed',
-          value: 'King Bed',
-          icon: 'o_king_bed'
-        },
-        {
-          label: 'Twin Bed',
-          value: 'Twin Bed',
-          icon: 'o_single_bed'
-        },
-        {
-          label: 'Single Bed',
-          value: 'Single Bed',
-          icon: 'o_single_bed'
-        }
-      ]
+      selected: ref([])
     }
   },
+  data() {
+    return {
+      api: new this.$Api('frontoffice'),
+      availRooms: []
+    }
+  },
+  mounted() {
+    this.getResvProps()
+
+    if (this.$ResvStore.currentRoomResvId) {
+      this.getDetailResvRoom()
+    }
+
+    watch(
+      () => this.$ResvStore.currentRoomResvId,
+      () => {
+        this.getDetailResvRoom()
+        this.getResvProps()
+      }
+    )
+    watch(
+      () => [this.roomNo, this.roomBed, this.roomType],
+      () => {
+        this.isRoomExist()
+      }
+    )
+  },
   watch: {
-    'datePicker.from': {
-      immediate: true,
+    availRooms: {
       handler() {
-        this.formatDate()
-        this.updateDropdownLabel()
+        this.formatAvailableRoom()
       }
     },
-    'datePicker.to': {
+    'arrivalDepart.from': {
       immediate: true,
       handler() {
-        this.formatDate()
-        this.updateDropdownLabel()
+        this.formatArrivalDepart()
       }
+    },
+    'arrivalDepart.to': {
+      immediate: true,
+      handler() {
+        this.formatArrivalDepart()
+      }
+    },
+    guests: {
+      handler() {
+        this.updateGuestsCountLabel()
+      },
+      deep: true
+    }
+  },
+  methods: {
+    isRoomExist() {
+      if (this.roomType == null || this.roomNo == null || this.roomBed == null) return
+
+      this.availRooms.filter(
+        (r) =>
+          r.roomType == this.roomType && r.id == this.roomNo && r.bedSetup == this.roomBed.value
+      ).length < 1
+        ? this.$Helper.showNotif('Room Unavailable', '', 'warning')
+        : this.$Helper.showNotif('Room Available', '', 'positive')
+    },
+    roomBedMapper(bed) {
+      let obj = {
+        label: bed,
+        value: bed
+      }
+
+      if (bed == 'KING') obj['icon'] = 'o_king_bed'
+      if (bed == 'TWIN') obj['icon'] = 'o_single_bed'
+      if (bed == 'SINGLE') obj['icon'] = 'o_single_bed'
+
+      return obj
+    },
+    formatAvailableRoom() {
+      function getUniqueValues(data, key) {
+        const uniqueValues = [...new Set(data.map((item) => item[key]))]
+        return uniqueValues
+      }
+
+      const room = this.availRooms
+      this.roomNoOpts = getUniqueValues(room, 'id')
+      this.roomTypeOpts = getUniqueValues(room, 'roomType')
+      this.roomBedOpts = getUniqueValues(room, 'bedSetup').map(this.roomBedMapper)
+    },
+    formatArrivalDepart() {
+      if (this.arrivalDepart.from && this.arrivalDepart.to) {
+        const fromDate = new Date(this.arrivalDepart.from)
+        const toDate = new Date(this.arrivalDepart.to)
+
+        const options = {
+          month: 'numeric',
+          day: 'numeric'
+        }
+
+        const formattedFromDate = fromDate.toLocaleDateString('en-gb', options)
+        const formattedToDate = toDate.toLocaleDateString('en-gb', options)
+
+        const diffTime = Math.abs(toDate - fromDate)
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+        this.arrivalDepartLabel = `${formattedFromDate} - ${formattedToDate}, ${diffDays} Nights`
+      }
+    },
+    updateGuestsCount(type, value) {
+      this.guests[type] = Math.max(0, this.guests[type] + value)
+    },
+    updateGuestsCountLabel() {
+      this.guestsLabel = `${this.guests['adult']} Adult, ${this.guests['child']} Child, ${this.guests['baby']} Baby`
+    },
+    removeRoomResv() {
+      this.$ResvStore.clearData()
+
+      this.resvNo = ''
+      this.guestName = ''
+      this.resvResource = null
+      this.arrivalDepart = { from: null, to: null }
+      this.arrivalDepartLabel = 'Arrival - Depature, 1 Nights'
+      this.guests = { adult: 1, baby: 0, child: 0 }
+      this.resvStatus = null
+      this.resvRemark = ''
+      this.roomImage = ''
+      this.roomNo = null
+      this.roomType = null
+      this.roomBed = null
+    },
+    getResvProps() {
+      this.api.get('/page/detail/reservation/0/0/create', ({ status, data }) => {
+        if (status == 200) {
+          const { reservationStatus, availableRooms } = data
+
+          this.resvStatusOpts = reservationStatus.map((st) => {
+            return {
+              label: st.description,
+              value: st.id
+            }
+          })
+          this.availRooms = [...this.availRooms, ...availableRooms]
+        }
+      })
+    },
+    getDetailResvRoom() {
+      const { currentResvId, currentRoomResvId } = this.$ResvStore
+
+      if (currentResvId == 0 || currentRoomResvId == 0) return
+
+      this.loading = true
+      this.resvNo = currentResvId
+
+      this.api.get(
+        `/page/detail/reservation/${currentResvId}/${currentRoomResvId}`,
+        ({ status, data }) => {
+          this.loading = false
+
+          if (status == 200) {
+            const { reservation, room, arrangment, balance } = data
+
+            this.guestName = reservation.reserver.guest.name
+            this.resvResource = reservation.reserver.resourceName
+            this.arrivalDepart = { from: reservation.arrivalDate, to: reservation.departureDate }
+            this.guests = {
+              adult: reservation.manyAdult,
+              child: reservation.manyChild,
+              baby: reservation.manyBaby
+            }
+            this.resvStatus = {
+              value: reservation.resvStatus.id,
+              label: reservation.resvStatus.description
+            }
+            this.resvRemark = reservation.reservationRemarks
+            this.roomImage = room.roomImage
+            this.roomNo = room.id
+            this.roomType = room.roomType
+            this.roomBed = [room.bedSetup].map(this.roomBedMapper)[0]
+            this.availRooms = [
+              ...this.availRooms,
+              { id: room.id, roomType: room.roomType, bedSetup: room.bedSetup }
+            ]
+          }
+        }
+      )
     }
   }
 })
