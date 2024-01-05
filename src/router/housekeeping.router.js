@@ -47,14 +47,6 @@ export const housekeeping_routes = [
     }
   },
   {
-    path: '/hk/rooming-list',
-    component: () => import('pages/HK/RoomingList.vue'),
-    meta: {
-      title: 'Rooming List',
-      icon: 'o_meeting_room'
-    }
-  },
-  {
     path: '/hk/lost-found',
     component: () => import('pages/HK/LostAndFound.vue'),
     meta: {
@@ -84,14 +76,6 @@ export const hkreports_routes = [
     component: () => import('pages/HK/reports/RoomPlan.vue'),
     meta: {
       title: 'Room Plan'
-    }
-  },
-
-  {
-    path: '/hk/report/vip-list',
-    component: () => import('pages/HK/reports/VipList.vue'),
-    meta: {
-      title: 'VIP List'
     }
   },
   {

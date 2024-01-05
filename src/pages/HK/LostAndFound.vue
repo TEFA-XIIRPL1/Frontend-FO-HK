@@ -527,8 +527,25 @@ export default defineComponent({
       chartSeries,
       chartOptions,
       columns,
-      rows
+      rows,
+      api: new this.$Api('housekeeping')
     }
+  },
+  methods: {
+    getData() {
+      this.loading = !this.loading
+
+      this.api.get('lost-founds', ({ status, data }) => {
+        if (status === 200) {
+          console.log('berhasil')
+        } else {
+          console.log('gagal')
+        }
+      })
+    }
+  },
+  mounted() {
+    this.getData()
   }
 })
 </script>
