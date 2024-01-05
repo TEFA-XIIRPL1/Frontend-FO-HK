@@ -6,6 +6,13 @@
       card_class="full-width q-px-lg"
       style="max-height: 719px"
     >
+      <!-- BTNs -->
+      <div class="full-width justify-end flex q-gutter-sm">
+        <q-btn padding="4px" flat>
+          <q-icon size="36px" color="green" name="o_print" />
+        </q-btn>
+      </div>
+
       <FormDate />
 
       <!-- Table -->
