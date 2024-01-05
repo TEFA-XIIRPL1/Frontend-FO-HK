@@ -19,10 +19,16 @@
       />
     </div>
     <q-popup-proxy transition-show="jump-down" transition-hide="jump-up">
-      <q-date v-model="pureDate">
+      <q-date v-model="originalDate">
         <div class="row items-center justify-end q-gutter-sm">
-          <q-btn label="Cancel" color="primary" flat v-close-popup />
-          <q-btn label="OK" color="primary" flat @click="updateDate" v-close-popup />
+          <q-btn
+            label="Cancel"
+            color="primary"
+            flat
+            v-close-popup
+            @click="() => (clicked = !clicked)"
+          />
+          <q-btn label="OK" color="primary" flat @click="originalToFormatted" v-close-popup />
         </div>
       </q-date>
     </q-popup-proxy>
@@ -34,52 +40,51 @@ import { ref } from 'vue'
 
 export default {
   name: 'FormDate',
+  emits: ['getDate'],
   setup() {
-    const pureDate = ref('')
     return {
-      pureDate
+      originalDate: ref(''),
+      formattedDate: ref('')
     }
   },
   data() {
     return {
-      clicked: ref(false),
-      formattedDate: '',
-      getDate: ''
+      clicked: ref(false)
     }
   },
   methods: {
-    formatDate(day, month, year) {
-      let y = year.toString().substring(2)
-      this.formattedDate = `${day}/${month}/${y}`
+    // Utuk menampilkan date dengan format dd/mm/yyyy
+    setFormattedDate() {
+      const day = this.$Helper.getDay()
+      const month = this.$Helper.getMonth()
+      const year = this.$Helper.getYear()
+      this.formattedDate = day + '/' + month + '/' + year
     },
-    setDate() {
-      let date = new Date()
 
-      let year = date.getFullYear()
-      let month = ('0' + (date.getMonth() + 1)).slice(-2)
-      let day = ('0' + date.getDate()).slice(-2)
+    // Utuk model date quasar dengan format yyyy/mm/dd
+    setOriginalDate() {
+      const day = this.$Helper.getDay()
+      const month = this.$Helper.getMonth()
+      const year = this.$Helper.getYear()
 
-      // jika di butuhkan
-      let hour = ('0' + date.getHours()).slice(-2)
-      let min = ('0' + date.getMinutes()).slice(-2)
-      let sec = ('0' + date.getSeconds()).slice(-2)
-
-      // let formattedDate = `${year}-${month}-${day} ${hour}:${min}:${sec}`
-      this.pureDate = `${year}/${month}/${day}`
-      this.formatDate(day, month, year)
+      this.originalDate = year + '/' + month + '/' + day
     },
-    updateDate() {
-      if (!this.pureDate) return ''
-      let parts = this.pureDate.split('/')
-      let year = parts[0]
-      let month = parts[1]
-      let day = parts[2]
 
-      this.formatDate(day, month, year)
+    // Mengubah original date ke formatted date agar tampilan pada input = dd/mm/yyyy tanpa menganggu value dari original date
+    originalToFormatted() {
+      const parts = this.originalDate.split('/')
+      const formatted = `${parts[2]}/${parts[1]}/${parts[0]}`
+      this.formattedDate = formatted
+      this.clicked = !this.clicked
+
+      //Mengirim original date kepada page pengguna untuk di olah
+      this.$emit('getDate', this.originalDate)
     }
   },
   mounted() {
-    this.setDate()
+    this.setFormattedDate()
+    this.setOriginalDate()
+    this.$emit('getDate', this.originalDate)
   }
 }
 </script>

@@ -375,18 +375,8 @@
 import { defineComponent } from 'vue'
 import HKCard from 'src/components/HK/Card/HKCard.vue'
 import HKDateInput from 'src/components/HK/Form/HKDateInput.vue'
+import { ref } from 'vue'
 
-export default defineComponent({
-  name: 'CleanDirtyPage',
-  components: { HKCard, HKDateInput },
-  setup() {
-    return {
-      columns,
-      rows,
-      selectedColumn: null
-    }
-  }
-})
 const columns = [
   { name: 'Roomno', label: 'Room No', align: 'left', field: 'Roomno' },
   { name: 'Roomstatus', label: 'Room Status', align: 'left', field: 'Roomstatus' },
@@ -397,7 +387,64 @@ const columns = [
   { name: 'Action', label: 'Action', align: 'center', field: 'Action' }
 ]
 
-const rows = [
+// let rows = [
+//   {
+//     Roomno: '101',
+//     Roomstatus: 'Occupied',
+//     Guestname: 'John Doe',
+//     Arrival: '2023-12-01',
+//     Departure: '2023-12-10',
+//     Personinchange: 'Alice',
+//     Action: 'Check Out'
+//   },
+//   {
+//     Roomno: '102',
+//     Roomstatus: 'Vacant',
+//     Guestname: 'Jane Doe',
+//     Arrival: '2023-12-05',
+//     Departure: '2023-12-15',
+//     Personinchange: 'Bob',
+//     Action: 'Check In'
+//   },
+//   {
+//     Roomno: '103',
+//     Roomstatus: 'Occupied',
+//     Guestname: 'Sam Smith',
+//     Arrival: '2023-12-10',
+//     Departure: '2023-12-20',
+//     Personinchange: 'Charlie',
+//     Action: 'Extend Stay'
+//   },
+//   {
+//     Roomno: '104',
+//     Roomstatus: 'Vacant',
+//     Guestname: 'Eva Johnson',
+//     Arrival: '2023-12-15',
+//     Departure: '2023-12-25',
+//     Personinchange: 'David',
+//     Action: 'Check In'
+//   },
+//   {
+//     Roomno: '105',
+//     Roomstatus: 'Occupied',
+//     Guestname: 'Michael Brown',
+//     Arrival: '2023-12-20',
+//     Departure: '2023-12-30',
+//     Personinchange: 'Emily',
+//     Action: 'Check Out'
+//   },
+//   {
+//     Roomno: '106',
+//     Roomstatus: 'Occupied',
+//     Guestname: 'Michael Brown',
+//     Arrival: '2023-12-20',
+//     Departure: '2023-12-30',
+//     Personinchange: 'Emily',
+//     Action: 'Check Out'
+//   }
+// ]
+
+let rows = [
   {
     Roomno: '101',
     Roomstatus: 'Occupied',
@@ -406,53 +453,42 @@ const rows = [
     Departure: '2023-12-10',
     Personinchange: 'Alice',
     Action: 'Check Out'
-  },
-  {
-    Roomno: '102',
-    Roomstatus: 'Vacant',
-    Guestname: 'Jane Doe',
-    Arrival: '2023-12-05',
-    Departure: '2023-12-15',
-    Personinchange: 'Bob',
-    Action: 'Check In'
-  },
-  {
-    Roomno: '103',
-    Roomstatus: 'Occupied',
-    Guestname: 'Sam Smith',
-    Arrival: '2023-12-10',
-    Departure: '2023-12-20',
-    Personinchange: 'Charlie',
-    Action: 'Extend Stay'
-  },
-  {
-    Roomno: '104',
-    Roomstatus: 'Vacant',
-    Guestname: 'Eva Johnson',
-    Arrival: '2023-12-15',
-    Departure: '2023-12-25',
-    Personinchange: 'David',
-    Action: 'Check In'
-  },
-  {
-    Roomno: '105',
-    Roomstatus: 'Occupied',
-    Guestname: 'Michael Brown',
-    Arrival: '2023-12-20',
-    Departure: '2023-12-30',
-    Personinchange: 'Emily',
-    Action: 'Check Out'
-  },
-  {
-    Roomno: '106',
-    Roomstatus: 'Occupied',
-    Guestname: 'Michael Brown',
-    Arrival: '2023-12-20',
-    Departure: '2023-12-30',
-    Personinchange: 'Emily',
-    Action: 'Check Out'
   }
 ]
+
+export default defineComponent({
+  name: 'CleanDirtyPage',
+  components: { HKCard, HKDateInput },
+  setup() {
+    return {
+      columns,
+      rows,
+      selectedColumn: null,
+      loading: ref(fale)
+    }
+  },
+  data() {
+    return {
+      api: new this.$Api('housekeeping')
+    }
+  },
+  methods: {
+    getData() {
+      this.loading = !this.loading
+
+      this.api.get('lost-founds', ({ status, data }) => {
+        if (status === 200) {
+          console.log('berhasil')
+        } else {
+          console.log('gagal')
+        }
+      })
+    }
+  },
+  mounted() {
+    this.getData()
+  }
+})
 </script>
 
 <style>

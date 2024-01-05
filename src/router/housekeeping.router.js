@@ -47,14 +47,6 @@ export const housekeeping_routes = [
     }
   },
   {
-    path: '/hk/rooming-list',
-    component: () => import('pages/HK/RoomingList.vue'),
-    meta: {
-      title: 'Rooming List',
-      icon: 'o_meeting_room'
-    }
-  },
-  {
     path: '/hk/lost-found',
     component: () => import('pages/HK/LostAndFound.vue'),
     meta: {
@@ -86,14 +78,6 @@ export const hkreports_routes = [
       title: 'Room Plan'
     }
   },
-
-  {
-    path: '/hk/report/vip-list',
-    component: () => import('pages/HK/reports/VipList.vue'),
-    meta: {
-      title: 'VIP List'
-    }
-  },
   {
     path: '/hk/report/room-change',
     component: () => import('pages/HK/reports/RoomChange.vue'),
@@ -119,7 +103,7 @@ export const hkreports_routes = [
 
 export const hkroomboy_routes = [
   {
-    path: '/hk/rb/dashbboard',
+    path: '/hk/rb/dashboard',
     component: () => import('pages/HK/IMPPS/RoomBoy/Dashboard.vue')
   },
   {
@@ -130,7 +114,7 @@ export const hkroomboy_routes = [
 
 export const hksupervisor_routes = [
   {
-    path: '/hk/spv/dashbboard',
+    path: '/hk/spv/dashboard',
     component: () => import('pages/HK/IMPPS/Supervisor/Dashboard.vue')
   }
 ]
